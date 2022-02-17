@@ -1,7 +1,7 @@
 {
   "name": "cactus_club",
   "version": "1.0.0",
-  "description": "simple web app",
+  "description": "CS 340 Datasbase Project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "mysql",
     "node"
   ],
-  "author": "banospel@oregonstate.edu",
+  "author": "Alexia Banos Perez & Nathan Klump ",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.2",
