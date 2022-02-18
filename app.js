@@ -24,7 +24,7 @@ app.get('/', (req, res) =>{
     res.render('index')
 });
 
-app.get('/cashiers', (req, res) =>{ 
+app.get('/Cashiers', (req, res) =>{ 
         let query1 = "SELECT * FROM Cashiers;";                  // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -33,7 +33,7 @@ app.get('/cashiers', (req, res) =>{
         })                                                      // an object where 'data' is equal to the 'rows'
     });
 
-app.get('/customers', (req, res) =>{ 
+app.get('/Customers', (req, res) =>{ 
         let query1 = "SELECT * FROM Customers;";                // Define our query
 
         db.pool.query(query1, function(error, rows, fields){    // Execute the query
@@ -42,7 +42,7 @@ app.get('/customers', (req, res) =>{
         })                                                      // an object where 'data' is equal to the 'rows'
     });
 
-app.get('/plants', (req, res) =>{ 
+app.get('/Plants', (req, res) =>{ 
         let query3 = "SELECT * FROM Plants;";                   // Define our query
 
         db.pool.query(query3, function(error, rows, fields){    // Execute the query
@@ -51,7 +51,7 @@ app.get('/plants', (req, res) =>{
         })                                                      // an object where 'data' is equal to the 'rows'
     });
 
-app.get('/invoices', (req, res) =>{  
+app.get('/Invoices', (req, res) =>{  
         let query4 = "SELECT * FROM Invoices;";                  // Define our query
 
         db.pool.query(query4, function(error, rows, fields){    // Execute the query
@@ -60,7 +60,7 @@ app.get('/invoices', (req, res) =>{
         })                                                      // an object where 'data' is equal to the 'rows'
     });
 
-app.get('/invoiceItems', (req, res) =>{
+app.get('/InvoiceItems', (req, res) =>{
         let query5 = "SELECT * FROM InvoiceItems;";             // Define our query
 
         db.pool.query(query5, function(error, rows, fields){    // Execute the query
