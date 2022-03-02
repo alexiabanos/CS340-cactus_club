@@ -1,24 +1,12 @@
--- phpMyAdmin SQL Dump
--- version 5.1.1-1.el7.remi
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Feb 18, 2022 at 03:12 AM
--- Server version: 10.6.5-MariaDB-log
--- PHP Version: 7.4.27
+-- Database Definition Queries for the Cactus Club Project Website
+-- CS 340 Project: Team 17 - Nathan Klump & Lidia Alexia Banos
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
--- Database: `cs340_banospel`
+-- Database: `cs340_cactus_club_ddq`
 --
 
 -- --------------------------------------------------------
@@ -227,7 +215,3 @@ ALTER TABLE `Invoices`
   ADD CONSTRAINT `invoices_cashier_id_fk` FOREIGN KEY (`cashier_id`) REFERENCES `Cashiers` (`cashier_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `invoices_customer_id_fk` FOREIGN KEY (`customer_id`) REFERENCES `Customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
