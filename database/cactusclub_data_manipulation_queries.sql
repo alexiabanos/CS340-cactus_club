@@ -39,7 +39,7 @@ SELECT invoice_id, customer_id, cashier_id, total_price, invoice_date FROM Invoi
 --
 -- add a new Customer
 --
-INSERT INTO Customers (customer_first, customer_last, street, email, city, state, zip) 
+INSERT INTO Customers (customer_first, customer_last, street, email, city, customer_state, zip) 
 VALUES (:fnameInput, :lnameInput, :streetInput, :emailInput, :cityInput, :stateInput, :zipInput)
 
 --
@@ -72,21 +72,21 @@ VALUES (:invoice_id_from_dropdown_Input, :plant_id_from_dropdown_Input, :quantit
 -- update a Customer's data based on submission of the Update Customer form 
 --
 UPDATE Customers 
-SET customer_first = :fnameInput, customer_last= :lnameInput, street = :streetInput, email = :emailInput, city = :cityInput, state = :stateInput, zip = :zipInput 
+SET customer_first = :fnameInput, customer_last= :lnameInput, street = :streetInput, email = :emailInput, city = :cityInput, customer_state = :stateInput, zip = :zipInput 
 WHERE customer_id = :customer_ID_from_update_form
 
 --
 -- update a Plant's data based on submission of the Update Plant form
 --
 UPDATE Plants 
-SET plant_name = :pnameInput, plant_price = priceInput:
+SET plant_name = :pnameInput, plant_price = :priceInput
 WHERE plant_id = :plant_ID_from_update_form
 
 --
 -- update a Invoice's data based on submission of the Update Invoices form 
 --
 UPDATE Invoices 
- customer_id = customer_id_from_dropdown_Input:, cashier_id = :cashier_id_from_dropdown_Input, total_price = priceInput, invoice_date = :dateInput 
+SET ustomer_id = :customer_id_from_dropdown_Input:, cashier_id = :cashier_id_from_dropdown_Input, total_price = :priceInput, invoice_date = :dateInput 
 WHERE invoices_id = :invoices_ID_from_update_form
 
 --
