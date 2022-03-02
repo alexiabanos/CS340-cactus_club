@@ -86,7 +86,7 @@ WHERE plant_id = :plant_ID_from_update_form
 -- update a Invoice's data based on submission of the Update Invoices form 
 --
 UPDATE Invoices 
-SET ustomer_id = :customer_id_from_dropdown_Input:, cashier_id = :cashier_id_from_dropdown_Input, total_price = :priceInput, invoice_date = :dateInput 
+SET customer_id = :customer_id_from_dropdown_Input:, cashier_id = :cashier_id_from_dropdown_Input, total_price = :priceInput, invoice_date = :dateInput 
 WHERE invoices_id = :invoices_ID_from_update_form;
 
 --
