@@ -84,7 +84,11 @@ addRowToTable = (data) => {
     let idCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
-    let hourlyCell = document.createElement("TD");
+    let emailCell = document.createElement("TD");
+    let streetCell = document.createElement("TD");
+    let cityCell = document.createElement("TD");
+    let stateCell = document.createElement("TD");
+    let zipCell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 
@@ -101,7 +105,7 @@ addRowToTable = (data) => {
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deletePerson(newRow.customer_id);
+        deleteCustomer(newRow.customer_id);
     };
 
     // Add the cells to the row 

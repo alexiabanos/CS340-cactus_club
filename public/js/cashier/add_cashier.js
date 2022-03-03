@@ -80,7 +80,7 @@ addRowToTable = (data) => {
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deletePerson(newRow.cashier_id);
+        deleteCashier(newRow.cashier_id);
     };
 
     // Add the cells to the row 

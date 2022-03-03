@@ -92,37 +92,37 @@
 					<div class="modal-body">
             <p style="color:red;">Required Fields *</p>						
 						<div class="form-group">
-							<label>Customer Last Name: *</label>
-							<input type="text" class="form-control" required>
+							<label for="input-customer_first">Customer First Name: *</label>
+							<input type="text" class="form-control" name="input-customer_first" id="input-customer_first" required>
+						</div>
+						<div class="form-group" for ="input-customer_last">
+							<label for="input-customer_last">Customer Last Name: *</label>
+							<input class="form-control" name="input-customer_last" id="input-customer_last"required></input>
 						</div>
 						<div class="form-group">
-							<label>Customer First Name: *</label>
-							<textarea class="form-control" required></textarea>
-						</div>
-						<div class="form-group">
-							<label>Customer Email: (Optional)</label>
-							<input type="email" class="form-control">
+							<label for="input-email">Customer Email: (Optional)</label>
+							<input type="email" class="form-control" name="input-email" id="input-email">
 						</div>					
             <div class="form-group">
-							<label>Street Address: (Optional)</label>
-							<input type="text" class="form-control">
+							<label for="input-street">Street Address: (Optional)</label>
+							<input type="text" class="form-control" name="input-street" id="input-street">
 						</div>
             <div class="form-group">
-							<label>City: (Optional)</label>
-							<input type="text" class="form-control">
+							<label for="input-city">City: (Optional)</label>
+							<input type="text" class="form-control" name="input-city" id="input-city">
 						</div>
             <div class="form-group">
-							<label>State: (Optional)</label>
-							<input type="text" class="form-control">
+							<label for="input-state">State: (Optional)</label>
+							<input type="text" class="form-control" name="input-state" id="input-state">
 						</div>
             <div class="form-group">
-							<label>ZipCode: (Optional)</label>
-							<input type="number" class="form-control">
+							<label for="input-zip">ZipCode: (Optional)</label>
+							<input type="number" class="form-control" name="input-zip" id="input-zip">
 						</div>
           </div>					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" href="Customers" value="Add">
 					</div>
 				</form>
 			</div>
