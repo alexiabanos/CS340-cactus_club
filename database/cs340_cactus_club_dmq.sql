@@ -72,7 +72,7 @@ VALUES (:invoice_id_from_dropdown_Input, :plant_id_from_dropdown_Input, :quantit
 -- update a Customer's data based on submission of the Update Customer form 
 --
 UPDATE Customers 
-SET customer_first = :fnameInput, customer_last= :lnameInput, street = :streetInput, email = :emailInput, city = :cityInput, customer_state = :stateInput, zip = :zipInput 
+SET customer_first = :fnameInput, customer_last = :lnameInput, street = :streetInput, email = :emailInput, city = :cityInput, customer_state = :stateInput, zip = :zipInput 
 WHERE customer_id = :customer_ID_from_update_form;
 
 --
@@ -80,27 +80,27 @@ WHERE customer_id = :customer_ID_from_update_form;
 --
 UPDATE Plants 
 SET plant_name = :pnameInput, plant_price = :priceInput
-WHERE plant_id = :plant_ID_from_update_form
+WHERE plant_id = :plant_ID_from_update_form;
 
 --
 -- update a Invoice's data based on submission of the Update Invoices form 
 --
 UPDATE Invoices 
-SET customer_id = :customer_id_from_dropdown_Input:, cashier_id = :cashier_id_from_dropdown_Input, total_price = :priceInput, invoice_date = :dateInput 
+SET customer_id = :customer_id_from_dropdown_Input, cashier_id = :cashier_id_from_dropdown_Input, total_price = :priceInput, invoice_date = :dateInput 
 WHERE invoices_id = :invoices_ID_from_update_form;
 
 --
 -- update a Cashiers's data based on submission of the Update Cashier form 
 --
 UPDATE Cashiers 
-SET cashier_first = :fnameInput, cashier_last= :lnameInput, hourly_rate= :hourlyrateInput  
+SET cashier_first = :fnameInput, cashier_last = :lnameInput, hourly_rate = :hourlyrateInput  
 WHERE cashier_id= :cashier_ID_from_update_form;
 
 --
 -- update an Invoice Item's data based on submission of the Update InvoiceItem form 
 --
 UPDATE InvoiceItems 
-SET invoice_id = :invoice_id_from_dropdown_Input, plant_id= :plant_id_from_dropdown_Input, plant_quantity: quantityInput
+SET invoice_id = :invoice_id_from_dropdown_Input, plant_id = :plant_id_from_dropdown_Input, plant_quantity = :quantityInput
 WHERE invoiceItem_id = :invoiceItem_ID_from_update_form;
 
 -- --------------------------------------------------------
