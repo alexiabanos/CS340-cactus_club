@@ -1,32 +1,32 @@
 // Get the objects we need to modify
-let addCashierForm = document.getElementById('add-cashier-form-ajax');
+let addInvoiceItemForm = document.getElementById('add-invoiceItem-form-ajax');
 
 // Modify the objects we need
-addCashierForm.addEventListener("submit", function(e) {
+addInvoiceItemForm.addEventListener("submit", function(e) {
 
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputCashierFirst = document.getElementById("input-cashier_first");
-    let inputCashierLast = document.getElementById("input-cashier_last");
+    let inputInvoiceItemFirst = document.getElementById("input-invoiceItem_first");
+    let inputInvoiceItemLast = document.getElementById("input-invoiceItem_last");
     let inputHourlyRate = document.getElementById("input-hourly_rate");
 
     // Get the values from the form fields
-    let cashierFirstValue = inputCashierFirst.value;
-    let cashierLastValue = inputCashierLast.value;
+    let invoiceItemFirstValue = inputInvoiceItemFirst.value;
+    let invoiceItemLastValue = inputInvoiceItemLast.value;
     let hourlyRateValue = inputHourlyRate.value;
 
     // Put our data we want to send in a javascript object
     let data = {
-        cashier_first: cashierFirstValue,
-        cashier_last: cashierLastValue,
+        invoiceItem_first: invoiceItemFirstValue,
+        invoiceItem_last: invoiceItemLastValue,
         hourly_rate: hourlyRateValue,
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-cashier-ajax", true);
+    xhttp.open("POST", "/add-invoiceItem-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -37,8 +37,8 @@ addCashierForm.addEventListener("submit", function(e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputCashierFirst.value = '';
-            inputCashierLast.value = '';
+            inputInvoiceItemFirst.value = '';
+            inputInvoiceItemLast.value = '';
             inputHourlyRate.value = '';
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -53,7 +53,7 @@ addCashierForm.addEventListener("submit", function(e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("cashiers-table");
+    let currentTable = document.getElementById("InvoiceItems-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -72,15 +72,15 @@ addRowToTable = (data) => {
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.cashier_id;
-    firstNameCell.innerText = newRow.cashier_first;
-    lastNameCell.innerText = newRow.cashier_last;
+    idCell.innerText = newRow.invoiceItem_id;
+    firstNameCell.innerText = newRow.invoiceItem_first;
+    lastNameCell.innerText = newRow.invoiceItem_last;
     hourlyCell.innerText = newRow.hourly_rate;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deletePerson(newRow.cashier_id);
+        deletePerson(newRow.invoiceItem_id);
     };
 
     // Add the cells to the row 
@@ -91,18 +91,18 @@ addRowToTable = (data) => {
     row.appendChild(deleteCell);
 
     // Add a custom row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data-value', newRow.cashier_id);
+    row.setAttribute('data-value', newRow.invoiceItem_id);
 
     // Add the row to the table
     currentTable.appendChild(row);
 
-    // Dropdown menu for updating cashiers
+    // Dropdown menu for updating invoiceItems
 
     // Find drop down menu, create a new option, fill data in the option (full name, id),
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
-    option.text = newRow.cashier_first + ' ' + newRow.cashier_last;
+    option.text = newRow.invoiceItem_first + ' ' + newRow.invoiceItem_last;
     option.value = newRow.id;
     selectMenu.add(option);
 

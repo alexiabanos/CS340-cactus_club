@@ -10,20 +10,20 @@ addcustomerForm.addEventListener("submit", function(e) {
     // Get form fields we need to get data from
     let inputCustomerFirst = document.getElementById("input-customer_first");
     let inputCustomerLast = document.getElementById("input-customer_last");
+    let inputEmail = document.getElementById("input-email");
     let inputStreet = document.getElementById("input-street");
-    let inputStreet = document.getElementById("input-street");
-    let inputStreet = document.getElementById("input-street");
-    let inputStreet = document.getElementById("input-street");
-    let inputStreet = document.getElementById("input-street");
+    let inputCity = document.getElementById("input-city");
+    let inputState = document.getElementById("input-state");
+    let inputZip = document.getElementById("input-zip");
 
     // Get the values from the form fields
     let customerFirstValue = inputCustomerFirst.value;
     let customerLastValue = inputCustomerLast.value;
+    let emailValue = inputEmail.value;
     let streetValue = inputStreet.value;
-    let streetValue = inputStreet.value;
-    let streetValue = inputStreet.value;
-    let streetValue = inputStreet.value;
-    let streetValue = inputStreet.value;
+    let cityValue = inputCity.value;
+    let stateValue = inputState.value;
+    let zipValue = inputZip.value;
 
     // Put our data we want to send in a javascript object
     let data = {
@@ -49,9 +49,14 @@ addcustomerForm.addEventListener("submit", function(e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputcustomerFirst.value = '';
-            inputcustomerLast.value = '';
-            inputHourlyRate.value = '';
+            inputCustomerFirst.value = '';
+            inputCustomerLast.value = '';
+            inputEmail.value = '';
+            inputStreet.value = '';
+            inputCity.value = '';
+            inputState.value = '';
+            inputZip.value = '';
+
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -87,7 +92,11 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.customer_id;
     firstNameCell.innerText = newRow.customer_first;
     lastNameCell.innerText = newRow.customer_last;
-    hourlyCell.innerText = newRow.hourly_rate;
+    emailCell.innerText = newRow.email;
+    streetCell.innerText = newRow.street;
+    cityCell.innerText = newRow.city;
+    stateCell.innerText = newRow.state;
+    zipCell.innerText = newRow.zip;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -99,7 +108,11 @@ addRowToTable = (data) => {
     row.appendChild(idCell);
     row.appendChild(firstNameCell);
     row.appendChild(lastNameCell);
-    row.appendChild(hourlyCell);
+    row.appendChild(emailCell);
+    row.appendChild(streetCell);
+    row.appendChild(cityCell);
+    row.appendChild(stateCell);
+    row.appendChild(zipCell);
     row.appendChild(deleteCell);
 
     // Add a custom row attribute so the deleteRow function can find a newly added row
@@ -115,7 +128,7 @@ addRowToTable = (data) => {
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
     option.text = newRow.customer_first + ' ' + newRow.customer_last;
-    option.value = newRow.id;
+    option.value = newRow.customer_id;
     selectMenu.add(option);
 
 }
