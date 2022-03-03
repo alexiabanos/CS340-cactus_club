@@ -58,13 +58,56 @@ app.get('/Plants', (req, res) => {
 });
 
 app.get('/Invoices', (req, res) => {
-    let query4 = "SELECT * FROM Invoices;"; // Define our query
-
-    db.pool.query(query4, function(error, rows, fields) { // Execute the query
-
-            res.render('Invoices', { data: rows }); // Render the Invoices.hbs file, and also send the renderer
-        }) // an object where 'data' is equal to the 'rows'
-});
+    
+        // Declare Query 1
+        let query1;
+    
+        // If there is no query string, we just perform a basic SELECT
+        if (req.query.invoice_id === undefined)
+        {
+            query1 = "SELECT * FROM Invoices;";
+        }
+    
+        // If there is a query string, we assume this is a search, and return desired results
+        else
+        {
+            query1 = `SELECT * FROM Invoices WHERE invoice_id LIKE "${req.query.invoice_id}%"`
+        }
+    
+        // Query 2
+        let query2 = "SELECT * FROM Customers;";
+    
+        // Run the 1st query
+        db.pool.query(query1, function(error, rows, fields){
+            
+            // Save the invoices
+            let invoices = rows;
+            
+            // Run the second query
+            db.pool.query(query2, (error, rows, fields) => {
+                
+                // Save the customers
+                let customers = rows;
+    
+                // Construct an object for reference in the table
+                // Array.map is awesome for doing something with each
+                // element of an array.
+                let customermap = {}
+                customers.map(customer => {
+                    let customer_id = parseInt(customer.customer_id, 10);
+    
+                    customermap[customer_id] = customer["cutomer_last"];
+                })
+    
+                // Overwrite the customer ID with the name of the customer in the invoices object
+                invoices = invoices.map(invoice => {
+                    return Object.assign(invoice, {customer: customermap[invoice.customer_last]})
+                })
+    
+                return res.render('Invoices', {data: invoices, customers: customers});
+            })
+        })
+    });
 
 app.get('/InvoiceItems', (req, res) => {
     let query5 = "SELECT * FROM InvoiceItems;"; // Define our query
@@ -91,7 +134,7 @@ app.post('/add-cashier-ajax', function(req, res) {
             res.sendStatus(400);
         } else
         {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on Cashiers
             query2 = `SELECT * FROM Cashiers;`;
             db.pool.query(query2, function(error, rows, fields){
 
@@ -159,7 +202,7 @@ app.post('/add-customer-ajax', function(req, res) {
             res.sendStatus(400);
         } else
         {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on Customers
             query2 = `SELECT * FROM Customers;`;
             db.pool.query(query2, function(error, rows, fields){
 
@@ -195,7 +238,7 @@ app.post('/add-plant-ajax', function(req, res) {
             res.sendStatus(400);
         } else
         {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on Plants
             query2 = `SELECT * FROM Plants;`;
             db.pool.query(query2, function(error, rows, fields){
 
@@ -238,9 +281,11 @@ app.post('/add-invoice-ajax', function(req, res) {
             res.sendStatus(400);
         } else
         {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on Invoices
             query2 = `SELECT * FROM Invoices;`;
             db.pool.query(query2, function(error, rows, fields){
+
+                let invoices = rows;
 
                 // If there was an error on the second query, send a 400
                 if (error) {
@@ -252,7 +297,28 @@ app.post('/add-invoice-ajax', function(req, res) {
                 // If all went well, send the results of the query back.
                 else
                 {
-                    res.send(rows);
+                    query3 = `SELECT * FROM Customers;`;
+                    db.pool.query(query3, function(error, rows, fields){
+                        
+                        // Save the customers
+                        let customers = rows;
+
+                        // Construct an object for reference in the table
+                        // Array.map is awesome for doing something with each
+                        // element of an array.
+                        let customermap = {}
+                        customers.map(customer => {
+                            let customer_id = parseInt(customer.customer_id, 10);
+
+                            customermap[customer_id] = customer["customer_last"];
+                        })
+
+                        invoices = invoices.map(invoice => {
+                            return Object.assign(invoice, {invoices: customermap[invoice.invoices]})
+                        })
+
+                        res.send(invoices);
+                    })
                 }
             })
         }
@@ -274,7 +340,7 @@ app.post('/add-invoiceItem-ajax', function(req, res) {
             res.sendStatus(400);
         } else
         {
-            // If there was no error, perform a SELECT * on bsg_people
+            // If there was no error, perform a SELECT * on InvoiceItems
             query2 = `SELECT * FROM InvoiceItems;`;
             db.pool.query(query2, function(error, rows, fields){
 
