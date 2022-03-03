@@ -11,17 +11,20 @@ addInvoiceForm.addEventListener("submit", function(e) {
     let inputCustomerId = document.getElementById("input-customer_id");
     let inputCashierId = document.getElementById("input-cashier_id");
     let inputTotalPrice = document.getElementById("input-total_price");
+    let inputInvoiceDate = document.getElementById("input-invoice_date");
 
     // Get the values from the form fields
     let customerIdValue = inputCustomerId.value;
     let cashierIdValue = inputCashierId.value;
     let totalPriceValue = inputTotalPrice.value;
+    let invoiceDateValue = inputInvoiceDate.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         customer_id: customerIdValue,
         invoice_last: cashierIdValue,
-        totalPrice_rate: totalPriceValue,
+        total_price: totalPriceValue,
+        invoice_date: invoiceDateValue,
     }
 
     // Setup our AJAX request
@@ -40,6 +43,7 @@ addInvoiceForm.addEventListener("submit", function(e) {
             inputCustomerId.value = '';
             inputCashierId.value = '';
             inputTotalPrice.value = '';
+            inputInvoiceDate.value = '';
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -53,7 +57,7 @@ addInvoiceForm.addEventListener("submit", function(e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("Invoices-table");
+    let currentTable = document.getElementById("invoices-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -68,6 +72,7 @@ addRowToTable = (data) => {
     let customerIdCell = document.createElement("TD");
     let cashierIdCell = document.createElement("TD");
     let totalPriceCell = document.createElement("TD");
+    let invoiceDateCell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 
@@ -76,6 +81,7 @@ addRowToTable = (data) => {
     customerIdCell.innerText = newRow.customer_id;
     cashierIdCell.innerText = newRow.cashier_id;
     totalPriceCell.innerText = newRow.total_price;
+    invoiceDateCell.innerText = newRow.invoice_date;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
@@ -88,6 +94,7 @@ addRowToTable = (data) => {
     row.appendChild(customerIdCell);
     row.appendChild(cashierIdCell);
     row.appendChild(totalPriceCell);
+    row.appendChild(invoiceDateCell);
     row.appendChild(deleteCell);
 
     // Add a custom row attribute so the deleteRow function can find a newly added row

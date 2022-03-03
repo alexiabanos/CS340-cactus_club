@@ -189,7 +189,7 @@ app.post('/add-invoice-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Invoices (customer_id, cashier_id, invoice_date) VALUES ('${data.customer_id}', '${data.cashier_id}', '${data.invoice_date}')`;
+    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', '${data.cashier_id}', '${data.total_price}', '${data.invoice_date}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -220,7 +220,7 @@ app.post('/add-invoice-ajax', function(req, res) {
     })
 });
 
-app.post('/add-invoiceItems-ajax', function(req, res) {
+app.post('/add-invoiceItem-ajax', function(req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
