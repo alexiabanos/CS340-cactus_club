@@ -46,53 +46,29 @@
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="plants-table">
                     <thead class="table-light">
-                        <tr>
-                            <th>plant_id</th>
-                            <th>plant_name</th>
-                            <th>plant_price</th>
-                            <th> Edit / Delete </th>
-                        </tr>
+                        <thead class="table-light">
+                      <tr>
+                        {{#each data.[0]}}
+                        <th>{{@key}}</th>
+                        {{/each}}
+                        <th> Edit / Delete </th>
+                      </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>4562</td>
-                            <td>Easter Cactus</td>
-                            <td>22.95</td>
-
-                            <!-- EDIT / DELETE -->
-                            <td>
-                            <a href="#editPlantModal" class="edit" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editPlantModal" title="Edit">&#xE254;</i></a>
-								            <a href="#deletePlantModal" class="delete" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deletePlantModal"title="Delete">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6589</td>
-                            <td>Moon Cactus</td>
-                            <td>12.50</td>
-
-                            <!-- EDIT / DELETE -->
-                            <td>
-                            <a href="#editPlantModal" class="edit" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editPlantModal" title="Edit">&#xE254;</i></a>
-								            <a href="#deletePlantModal" class="delete" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deletePlantModal"title="Delete">&#xE872;</i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>7845</td>
-                            <td>Star Cactus</td>
-                            <td>8.75</td>
-                            
-                            <!-- EDIT / DELETE -->
-                            <td>
-                            <a href="#editPlantModal" class="edit" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editPlantModal" title="Edit">&#xE254;</i></a>
-								            <a href="#deletePlantModal" class="delete" data-bs-toggle="modal">
-                              <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deletePlantModal" title="Delete">&#xE872;</i></a>
-                            </td>
-                        </tr>
+                      {{#each data}}
+                      <tr>
+                        <td>{{this.plant_id}}</td>
+                        <td>{{this.plant_name}}</td>
+                        <td>{{this.plant_price}}</td>
+                        <!-- EDIT / DELETE -->
+                        <td>
+                          <a href="#editPlantModal" class="edit" data-bs-toggle="modal">
+                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editPlantModal" title="Edit">&#xE254;</i></a>
+                          <a href="#deletePlantModal" class="delete" data-bs-toggle="modal">
+                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deletePlantModal"title="Delete">&#xE872;</i></a>
+                          </td>
+                      </tr>
+                      {{/each}}
                       </tbody>
                 </table>
             </div>

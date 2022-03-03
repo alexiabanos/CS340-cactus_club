@@ -22,7 +22,7 @@ addInvoiceForm.addEventListener("submit", function(e) {
     // Put our data we want to send in a javascript object
     let data = {
         customer_id: customerIdValue,
-        invoice_last: cashierIdValue,
+        cashier_id: cashierIdValue,
         total_price: totalPriceValue,
         invoice_date: invoiceDateValue,
     }
