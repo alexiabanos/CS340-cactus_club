@@ -13,6 +13,7 @@ var db = require('./database/db-connector')
 // Handlebars
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars'); // Import express-handlebars
+const { NULL } = require('mysql/lib/protocol/constants/types');
 app.engine('.hbs', engine({
     defaultLayout: 'main',
     extname: ".hbs"
@@ -115,9 +116,40 @@ app.post('/add-customer-ajax', function(req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
+     // Capture NULL values
+     let email = (data.email);
+     if (email === '')
+     {
+         email = 'NULL'
+     }
+
+    let street = (data.street);
+    if (street === '')
+    {
+        street = 'NULL'
+    }
+
+     let city = (data.city);
+     if (city === '')
+     {
+        city = 'NULL'
+     }
+
+    let state = (data.state);
+    if (state === '')
+    {
+        state = 'NULL'
+    }
+
+     let zip = parseInt(data.zip);
+     if (isNaN(zip))
+     {
+         zip = 'NULL'
+     }
+
     // Create the query and run it on the database
     query1 = `INSERT INTO Customers (customer_first, customer_last, email, street, city, state, zip) VALUES ('${data.customer_first}', 
-        '${data.customer_last}', '${data.email}', '${data.street}', '${data.city}', '${data.state}', '${data.zip}')`;
+        '${data.customer_last}', ${email}, ${street}, ${city}, ${state}, ${zip})`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -187,9 +219,16 @@ app.post('/add-plant-ajax', function(req, res) {
 app.post('/add-invoice-ajax', function(req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
+    
+    // Capture NULL values
+    let cashier_id = parseInt(data.cashier_id);
+    if (isNaN(cashier_id))
+    {
+        cashier_id = 'NULL'
+    }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', '${data.cashier_id}', '${data.total_price}', '${data.invoice_date}')`;
+    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', ${cashier_id}, '${data.total_price}', '${data.invoice_date}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
