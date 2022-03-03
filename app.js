@@ -83,6 +83,7 @@ app.get('/Invoices', (req, res) => {
             // Save the invoices
             let invoices = rows;
             
+            let query3 = "SELECT * FROM Cashiers;";
             // Run the second query
             db.pool.query(query2, (error, rows, fields) => {
                 
@@ -98,13 +99,30 @@ app.get('/Invoices', (req, res) => {
     
                     customermap[customer_id] = customer["cutomer_last"];
                 })
+
+                // Run the third query
+                db.pool.query(query3, (error, rows, fields) => {
+                    
+                    // Save the customers
+                    let cashiers = rows;
+
+                    // Construct an object for reference in the table
+                    // Array.map is awesome for doing something with each
+                    // element of an array.
+                    let cashiermap = {}
+                    cashiers.map(cashier => {
+                        let cashier_id = parseInt(cashier.cashier_id, 10);
+        
+                        cashiermap[cashier_id] = cashier["cashier_last"];
+                    })
     
-                // Overwrite the customer ID with the name of the customer in the invoices object
-                invoices = invoices.map(invoice => {
-                    return Object.assign(invoice, {customer: customermap[invoice.customer_last]})
+                    // Overwrite the customer ID with the name of the customer in the invoices object
+                    invoices = invoices.map(invoice => {
+                        return Object.assign(invoice, {customer: customermap[invoice.customer_last], cashier: cashiermap[invoice.cashier_last]})
+                    })
+        
+                    return res.render('Invoices', {data: invoices, customers: customers, cashiers: cashiers});
                 })
-    
-                return res.render('Invoices', {data: invoices, customers: customers});
             })
         })
     });
