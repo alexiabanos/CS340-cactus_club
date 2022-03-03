@@ -88,25 +88,25 @@
 					<div class="modal-body">
             		<p style="color:red;">Required Fields *</p>
 						<div class="form-group">
-							<label>Customer ID: *</label>
-							<input type="text" class="form-control">
+							<label for="customer_id">Customer ID: *</label>
+							<input type="text" class="form-control" name="input-customer_id" id="input-customer_id" >
 						</div>						
 						<div class="form-group">
-							<label>Cashier ID: (Optional)</label>
-							<input type="text" class="form-control">
+							<label for="cashier_id">Cashier ID: (Optional)</label>
+							<input type="text" class="form-control" name="input-cashier_id" id="input-cashier_id" >
 						</div>
 						<div class="form-group">
-							<label>Total Price: *</label>
-							<input type="text" class="form-control" required>
+							<label for="total_price">Total Price: *</label>
+							<input type="text" class="form-control" name="input-total_price" id="input-total_price" required>
 						</div>					
           				<div class="form-group">
-							<label>Invoice Date: *</label>
-							<input type="date" class="form-control" required>
+							<label for="invoice_date">Invoice Date: *</label>
+							<input type="date" class="form-control" name="input-invoice_date" id="input-invoice_date" required>
 						</div>				
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" href="Invoices" value="Add">
 					</div>
 				</form>
 			</div>
