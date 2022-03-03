@@ -1,4 +1,8 @@
 <!-- INVOICE ITEMS PAGE -->
+  
+  <!-- DELETE JS SCRIPT -->
+<script src="./js/invoiceItem/delete_invoiceItem.js"></script>
+
   <div class="table-responsive">
     <div class="table-wrapper">			
       <div style="margin-top:100px; margin-bottom: 100px;">
@@ -76,7 +80,7 @@
 	<div id="addInvoiceItemModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
+				<form id="add-invoiceItem-form-ajax">
 					<div class="modal-header">						
 						<h4 class="modal-title">Add Invoice Item</h4>
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
@@ -89,11 +93,11 @@
 						</div>
 						<div class="form-group">
 							<label>Plant ID: *</label>
-							<input type="text" class="form-control" required>
+							<input type="number" class="form-control" required>
 						</div>
 						<div class="form-group">
 							<label>Plant Quantity: *</label>
-							<input type="text" class="form-control" required>
+							<input type="number" class="form-control" required>
 						</div>
           			</div>					
 					<div class="modal-footer">
@@ -104,6 +108,8 @@
 			</div>
 		</div>
 	</div>
+	<!-- ADD JS SCRIPT -->
+	<script src="./js/invoiceItem/add_invoiceItem.js"></script>
 
 	<!-- UPDATE MODAL -->
 	<div id="updateInvoiceItemModal" class="modal">
