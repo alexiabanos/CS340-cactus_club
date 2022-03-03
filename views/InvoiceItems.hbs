@@ -8,13 +8,13 @@
                 <!-- INVOICES ITEMS-->
                 <h1>Invoice Items</h1>
                 <hr>
-                <p>Use this page to add, edit, update or remove the details individual Invoice Items on Invoices of a customer's purchase:</p>
+                <p>Use this page to add, update, update or remove the details individual Invoice Items on Invoices of a customer's purchase:</p>
 
                 <!-- ADD BUTTON -->
                 <table>
                     <tr>
                       <td colspan="6" align="left">
-                      <a href="#addInvoiceItemModal" class="edit" data-bs-toggle="modal">
+                      <a href="#addInvoiceItemModal" class="update" data-bs-toggle="modal">
                       <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
                       </td>
                     </tr>
@@ -47,7 +47,7 @@
                         {{#each data.[0]}}
                         <th>{{@key}}</th>
                         {{/each}}
-                        <th> Edit / Delete </th>
+                        <th> update / Delete </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -57,10 +57,10 @@
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_quantity}}</td>
-                        <!-- EDIT / DELETE -->
+                        <!-- update / DELETE -->
                         <td>
-                          <a href="#editInvoiceItemModal" class="edit" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editInvoiceItemModal" title="Edit">&#xE254;</i></a>
+                          <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
+                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="update">&#xE254;</i></a>
                           <a href="#deleteInvoiceItemModal" class="delete" data-bs-toggle="modal">
                           <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteInvoiceItemModal"title="Delete">&#xE872;</i></a>
                           </td>
@@ -105,13 +105,13 @@
 		</div>
 	</div>
 
-	<!-- EDIT MODAL -->
-	<div id="editInvoiceItemModal" class="modal">
+	<!-- UPDATE MODAL -->
+	<div id="updateInvoiceItemModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form>
 					<div class="modal-header">						
-						<h4 class="modal-title">Edit Invoice Item</h4>
+						<h4 class="modal-title">Update Invoice Item</h4>
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					  <div class="modal-body">

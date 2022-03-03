@@ -5,8 +5,6 @@
 // Express
 var express = require('express');
 var app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 PORT = 9157;
 
 // Database
@@ -21,8 +19,12 @@ app.engine('.hbs', engine({
 })); // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs'); // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
-// GET Requests
+// Add/Update/Delete Setup
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(__dirname + '/public')); // this is needed to allow for the form to use the ccs style sheet/javscript
 
+// GET Requests
 app.get('/', (req, res) => {
     res.render('index')
 });
@@ -73,8 +75,7 @@ app.get('/InvoiceItems', (req, res) => {
 });
 
 // POST Requests
-
-app.post('/add-cashier-form', function(req, res) {
+app.post('/add-cashier-ajax', function(req, res) {
     // Capture the incoming data and parse it back to a JS object
     let data = req.body;
 
@@ -88,11 +89,106 @@ app.post('/add-cashier-form', function(req, res) {
             console.log(error)
             res.sendStatus(400);
         } else {
-            res.redirect('/Cashiers');
+            res.send(rows);
         }
     })
 });
 
+app.delete('/delete-cashier/:cashier_id', function(req, res, next) {
+    let data = req.body;
+    let deleteCashiers = `DELETE FROM Cashiers WHERE pid = ?`;
+
+    // Run the 1st query
+    db.pool.query(deleteCashiers, [req.params.cashier_id], function(error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+/*
+app.post('/add-plant-form', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Plants (plant_name, plant_price) VALUES ('${data['input-plant_name']}', '${data['input-plant_price']}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            res.redirect('/Plants');
+        }
+    })
+});
+
+app.post('/add-customer-form', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Customers (customer_first, customer_last, street, email, city, state, zip) 
+        VALUES ('${data['input-customer_first']}', '${data['input-customer_last']}', '${data['input-email']}', 
+        '${data['input-street']}', '${data['input-city']}','${data['input-state']}', '${data['input-zip']}')`;
+
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            res.redirect('/Customers');
+        }
+    })
+});
+
+app.post('/add-invoice-form', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data['input-customer_id']}', '${data['input-cashier_id']}', '${data['input-total_price']}, '${data['input-invoice_date']}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            res.redirect('/Invoices');
+        }
+    })
+});
+
+app.post('/add-invoiceItems-form', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) VALUES ('${data['input-invoice_id']}', '${data['input-plant_id']}', '${data['input-plant_quantity']}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            res.redirect('/InvoiceItems');
+        }
+    })
+});
+*/
 
 /*
     LISTENER
