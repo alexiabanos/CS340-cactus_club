@@ -51,7 +51,7 @@
 						<th>cashier_id</th>
 						<th>total_price</th>
 						<th>invoice_date</th>
-                        <th> Edit / Delete </th>
+                        <th> Modify </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -105,7 +105,7 @@
 							<select class="custom-select mr-sm-2" name="input-cashier_id" id="input-cashier_id">
 								<option value="">Select a Customer</option>
 								{{#each cashiers}}
-								<option value="{{this.cashier_id}}">{{this.cashier_first}}, {{this.cashier_last}}</option>
+								<option value="{{this.cashier_id}}">{{this.cashier_last}}, {{this.cashier_first}}</option>
 								{{/each}}
 							</select>
 						</div>

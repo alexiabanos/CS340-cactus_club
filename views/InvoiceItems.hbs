@@ -51,7 +51,7 @@
                         {{#each data.[0]}}
                         <th>{{@key}}</th>
                         {{/each}}
-                        <th> update / Delete </th>
+                        <th> Modify </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -89,11 +89,23 @@
             		<p style="color:red;">Required Fields *</p>						
 						<div class="form-group">
 							<label for="input-invoice_id">Invoice ID: *</label>
-							<input type="number" class="form-control"  name="input-invoice_id" id="input-invoice_id" required>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-invoice_id" id="input-invoice_id">
+								<option value="">Select an Invoice</option>
+								{{#each invoices}}
+								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
 							<label for="input-invoice_id">Plant ID: *</label>
-							<input type="number" class="form-control"  name="input-plant_id" id="input-plant_id" required>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-plant_id" id="input-plant_id">
+								<option value="">Select a Plant</option>
+								{{#each plants}}
+								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
 							<label for="input-invoice_id">Plant Quantity: *</label>

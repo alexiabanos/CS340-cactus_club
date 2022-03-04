@@ -18,38 +18,34 @@
 					<td colspan="6" align="left">
 					<a href="#addCashierModal" class="edit" data-bs-toggle="modal">
 					<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addCashierModal" title="Add">Add A New Cashier + </button></a>
-					<br>
 					</td>
 				</tr>
 				</tbody>
 			</table>
 
 			<!-- SEARCH BAR -->
-			{{!-- <table class="table table-hover" >
+			 <table class="table table-hover">
 				<thead class="table-light">
+				<div class="input-group"></div>
+				<form id="search-cashier-html" method='GET' action='/Cashiers'>	
 				<tr>
-					<th>Search for Cashiers:</th>
+					<label for="input-cashier_last"><th>Search by Last Name:</th></label>
 				</tr>
 				</thead>
 				<tbody>
 				<tr>
 					<td colspan="6">
-					<div class="input-group">
-					<input class="form-control mr-sm-2" type="search" placeholder="Cashier ID">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+					<input class="form-control mr-sm-2" type="search" placeholder="Enter last name..." type="text" name="cashier_last" id="input-cashier_last-html-search">
+					<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+					<a href='/Cashiers'><button class="btn btn-outline-secondary my-2 my-sm-0">Clear Search Results</button></a>
 					</div>
+				</form>
 					</td>
 				</tr>
 				</tbody>
-			</table> --}}
+			</table>
 
-			<form id="search-cashier-html" method='GET' action='/Cashiers'>
-				<label for="input-cashier_last">Search by Last Name: </label>
-				<input type="text" name="cashier_last" id="input-cashier_last-html-search">
-				
-				<input type="submit">
-				<a href='/Cashiers'><button>Clear Search Results</button></a>
-			</form>
+			
 
 
 			<!-- DATA TABLE -->
