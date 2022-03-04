@@ -31,11 +31,26 @@ app.get('/', (req, res) => {
 });
 
 app.get('/Cashiers', (req, res) => {
-    let query1 = "SELECT * FROM Cashiers;"; // Define our query
+    //let query1 = "SELECT * FROM Cashiers;"; // Define our query
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.cashier_last === undefined)
+    {
+        query1 = "SELECT * FROM Cashiers;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else
+    {
+        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%"`
+    }
+
 
     db.pool.query(query1, function(error, rows, fields) { // Execute the query
+            let cashiers = rows;
 
-            res.render('Cashiers', { data: rows }); // Render the Cashiers.hbs file, and also send the renderer
+            return res.render('Cashiers', { data: cashiers }); // Render the Cashiers.hbs file, and also send the renderer
         }) // an object where 'data' is equal to the 'rows'
 });
 
