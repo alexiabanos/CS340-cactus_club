@@ -46,9 +46,11 @@
                 <table class="table table-hover" id="invoices-table">
                     <thead class="table-light">
                       <tr>
-                        {{#each data.[0]}}
-                        <th>{{@key}}</th>
-                        {{/each}}
+                        <th>invoice_id</th>
+						<th>customer_id</th>
+						<th>cashier_id</th>
+						<th>total_price</th>
+						<th>invoice_date</th>
                         <th> Edit / Delete </th>
                       </tr>
                     </thead>
