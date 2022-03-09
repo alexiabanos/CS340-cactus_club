@@ -103,6 +103,7 @@ addRowToTable = (data) => {
     zipCell.innerText = newRow.zip;
 
     deleteCell = document.createElement("button");
+    deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deleteCustomer(newRow.customer_id);

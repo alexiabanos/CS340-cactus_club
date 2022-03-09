@@ -72,6 +72,7 @@ addRowToTable = (data) => {
     plantPriceCell.innerText = newRow.plant_price;
 
     deleteCell = document.createElement("button");
+    deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deletePerson(newRow.plant_id);

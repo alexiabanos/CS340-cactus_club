@@ -78,9 +78,11 @@ addRowToTable = (data) => {
     hourlyCell.innerText = newRow.hourly_rate;
 
     deleteCell = document.createElement("button");
+    deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deleteCashier(newRow.cashier_id);
+        window.location.reload();
     };
 
     // Add the cells to the row 

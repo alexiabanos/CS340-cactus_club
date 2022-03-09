@@ -84,6 +84,7 @@ addRowToTable = (data) => {
     invoiceDateCell.innerText = newRow.invoice_date;
 
     deleteCell = document.createElement("button");
+    deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deleteInvoice(newRow.invoice_id);
