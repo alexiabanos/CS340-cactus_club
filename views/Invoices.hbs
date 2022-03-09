@@ -23,25 +23,6 @@
                   </tbody>
                 </table>
 
-                <!-- SEARCH BAR -->
-                {{!-- <table class="table table-hover" >
-                  <thead class="table-light">
-                    <tr>
-                      <th>Search for Invoices:</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="6">
-                        <div class="input-group">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Invoice ID">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> --}}
-
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="invoices-table">
                     <thead class="table-light">
@@ -62,13 +43,9 @@
                         <td>{{this.cashier_id}}</td>
                         <td>{{this.total_price}}</td>
                         <td>{{this.invoice_date}}</td>
-                        <!-- EDIT / DELETE -->
-                        <td>
-                          <a href="#editInvoiceModal" class="edit" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editInvoiceModal" title="Edit">&#xE254;</i></a>
-                          <a href="#deleteInvoiceModal" class="delete" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteInvoiceModal"title="Delete">&#xE872;</i></a>
-                          </td>
+						
+						<!-- DELETE -->
+						<td><a href="/Invoices"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoices({{this.invoice_id}})">Delete</button></a></td>
                       </tr>
                       {{/each}}
                     </tbody>

@@ -25,25 +25,6 @@
                       </tr>
                     </tbody>
                 </table>
-                
-                <!-- SEARCH BAR -->
-                {{!-- <table class="table table-hover" >
-                  <thead class="table-light">
-                    <tr>
-                      <th>Search for Plants:</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="4">
-                        <div class="input-group">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Plant ID">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> --}}
 
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="plants-table">
@@ -61,13 +42,9 @@
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_name}}</td>
                         <td>{{this.plant_price}}</td>
-                        <!-- EDIT / DELETE -->
-                        <td>
-                          <a href="#editPlantModal" class="edit" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editPlantModal" title="Edit">&#xE254;</i></a>
-                          <a href="#deletePlantModal" class="delete" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deletePlantModal"title="Delete">&#xE872;</i></a>
-                          </td>
+
+                        <!-- DELETE -->
+						<td><a href="/Plants"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deletePlant({{this.plant_id}})">Delete</button></a></td>
                       </tr>
                       {{/each}}
                       </tbody>
