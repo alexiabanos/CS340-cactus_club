@@ -448,21 +448,20 @@ app.post('/add-invoiceItem-ajax', function(req, res) {
     })
 });
 
-app.delete('/delete-cashier/:cashier_id', function(req, res, next) {
+app.delete('/delete-cashier-ajax/', function(req, res, next) {
     let data = req.body;
-    let deleteCashiers = `DELETE FROM Cashiers WHERE pid = ?`;
+    let cashier_id = parseInt(data.cashier_id);
+    let deleteCashier = `DELETE FROM Cashiers WHERE cashier_id = ?`;
 
     // Run the 1st query
-    db.pool.query(deleteCashiers, [req.params.cashier_id], function(error, rows, fields) {
+    db.pool.query(deleteCashier, [cashier_id], function(error, rows, fields) {
         if (error) {
-
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error);
             res.sendStatus(400);
         }
     })
 });
-
 
 /*
     LISTENER

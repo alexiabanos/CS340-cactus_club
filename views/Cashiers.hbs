@@ -45,9 +45,6 @@
 				</tbody>
 			</table>
 
-			
-
-
 			<!-- DATA TABLE -->
 			<table class="table table-hover" id="cashiers-table">
 				<thead class="table-light">
@@ -60,15 +57,13 @@
 				</thead>
 				<tbody>
 					{{#each data}}
-					<tr data-value={{this.id}}>
+					<tr data-value={{this.cashier_id}}>
 					<td>{{this.cashier_id}}</td>
 					<td>{{this.cashier_first}}</td>
 					<td>{{this.cashier_last}}</td>
 					<td>{{this.hourly_rate}}</td>
 					<!-- DELETE -->
-					<td>
-						<i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteCashierModal" title="Delete"  onclick="deletePerson({{this.id}})">&#xE872;</i></a>
-					</td>
+					<td><a href="/Cashiers"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteCashier({{this.cashier_id}})">Delete</button></a></td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -76,8 +71,6 @@
 		</div>
 	</div>
 </div>
-
-<script src="./js/delete_person.js"></script>
 
 <!-- ADD MODAL -->
 <div id="addCashierModal" class="modal">
@@ -153,7 +146,7 @@
 	</div>
 </div>
 
-	<!-- DELETE MODAL -->
+<!-- DELETE MODAL -->
 <div id="deleteCashierModal" class="modal">
 	<div class="modal-dialog">
 		<div class="modal-content">
