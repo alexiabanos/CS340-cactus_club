@@ -47,7 +47,7 @@
                         {{#each data.[0]}}
                         <th>{{@key}}</th>
                         {{/each}}
-                        <th> update / Delete </th>
+                        <th> Modify </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -57,7 +57,7 @@
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_quantity}}</td>
-                        <!-- update / DELETE -->
+                        <!-- UPDATE / DELETE -->
                         <td>
                           <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
                           <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="update">&#xE254;</i></a>

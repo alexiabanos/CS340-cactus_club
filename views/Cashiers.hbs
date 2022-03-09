@@ -47,7 +47,7 @@
 					{{#each data.[0]}}
 					<th>{{@key}}</th>
 					{{/each}}
-					<th> Edit / Delete </th>
+					<th> Delete </th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,13 +57,10 @@
 					<td>{{this.cashier_first}}</td>
 					<td>{{this.cashier_last}}</td>
 					<td>{{this.hourly_rate}}</td>
-					<!-- EDIT / DELETE -->
+					<!-- DELETE -->
 					<td>
-						<a href="#editCashierModal" class="edit" data-bs-toggle="modal">
-						<i class="material-icons" data-bs-toggle="tooltip" data-bs-target="editCashierModal" title="Edit">&#xE254;</i></a>
-						<a href="#deleteCashierModal" class="delete" data-bs-toggle="modal">
-						<i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteCashierModal"title="Delete">&#xE872;</i></a>
-						</td>
+						<i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteCashierModal" title="Delete"  onclick="deletePerson({{this.id}})">&#xE872;</i></a>
+					</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -71,6 +68,8 @@
 		</div>
 	</div>
 </div>
+
+<script src="./js/delete_person.js"></script>
 
 <!-- ADD MODAL -->
 <div id="addCashierModal" class="modal">
@@ -84,15 +83,15 @@
 				<div class="modal-body">
 					<p style="color:red;">Required Fields (*)</p>					
 					<div class="form-group">
-						<label for="input-cashier_first">First Name:</label>
+						<label for="input-cashier_first">First Name: *</label>
 						<input type="text" class="form-control" name="input-cashier_first" id="input-cashier_first" required>
 					</div>
 					<div class="form-group">
-						<label for="input-cashier_last">Last Name:</label>
+						<label for="input-cashier_last">Last Name: *</label>
 						<input type="text" class="form-control" name="input-cashier_last" id="input-cashier_last" required>
 					</div>
 					<div class="form-group">
-						<label for="input-hourly_rate">Hourly Rate:</label>
+						<label for="input-hourly_rate">Hourly Rate: *</label>
 						<input type="text" class="form-control" name="input-hourly_rate" id="input-hourly_rate" required>
 					</div>
 				</div>
