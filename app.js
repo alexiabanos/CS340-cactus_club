@@ -13,6 +13,7 @@ var db = require('./database/db-connector')
 // Handlebars
 const { engine } = require('express-handlebars');
 var exphbs = require('express-handlebars'); // Import express-handlebars
+const { NULL } = require('mysql/lib/protocol/constants/types');
 app.engine('.hbs', engine({
     defaultLayout: 'main',
     extname: ".hbs"
@@ -30,11 +31,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/Cashiers', (req, res) => {
-    let query1 = "SELECT * FROM Cashiers;"; // Define our query
+    //let query1 = "SELECT * FROM Cashiers;"; // Define our query
+    let query1;
+
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.cashier_last === undefined) {
+        query1 = "SELECT * FROM Cashiers;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%"`
+    }
+
 
     db.pool.query(query1, function(error, rows, fields) { // Execute the query
+            let cashiers = rows;
 
-            res.render('Cashiers', { data: rows }); // Render the Cashiers.hbs file, and also send the renderer
+            return res.render('Cashiers', { data: cashiers }); // Render the Cashiers.hbs file, and also send the renderer
         }) // an object where 'data' is equal to the 'rows'
 });
 
@@ -57,22 +71,132 @@ app.get('/Plants', (req, res) => {
 });
 
 app.get('/Invoices', (req, res) => {
-    let query4 = "SELECT * FROM Invoices;"; // Define our query
 
-    db.pool.query(query4, function(error, rows, fields) { // Execute the query
+    // Declare Query 1
+    let query1;
 
-            res.render('Invoices', { data: rows }); // Render the Invoices.hbs file, and also send the renderer
-        }) // an object where 'data' is equal to the 'rows'
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.invoice_id === undefined) {
+        query1 = "SELECT * FROM Invoices;";
+    }
+
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM Invoices WHERE invoice_id LIKE "${req.query.invoice_id}%"`
+    }
+
+    // Query 2
+    let query2 = "SELECT * FROM Customers;";
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Save the invoices
+        let invoices = rows;
+
+        let query3 = "SELECT * FROM Cashiers;";
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+
+            // Save the customers
+            let customers = rows;
+
+            // Construct an object for reference in the table
+            let customermap = {}
+            customers.map(customer => {
+                let customer_id = parseInt(customer.customer_id, 10);
+
+                customermap[customer_id] = customer["cutomer_last"];
+            })
+
+            // Run the third query
+            db.pool.query(query3, (error, rows, fields) => {
+
+                // Save the customers
+                let cashiers = rows;
+
+                // Construct an object for reference in the table
+                let cashiermap = {}
+                cashiers.map(cashier => {
+                    let cashier_id = parseInt(cashier.cashier_id, 10);
+
+                    cashiermap[cashier_id] = cashier["cashier_last"];
+                })
+
+                // Overwrite the customer ID with the name of the customer in the invoices object
+                invoices = invoices.map(invoice => {
+                    return Object.assign(invoice, { customer: customermap[invoice.customer_last], cashier: cashiermap[invoice.cashier_last] })
+                })
+
+                return res.render('Invoices', { data: invoices, customers: customers, cashiers: cashiers });
+            })
+        })
+    })
 });
 
 app.get('/InvoiceItems', (req, res) => {
-    let query5 = "SELECT * FROM InvoiceItems;"; // Define our query
+    // Declare Query 1
+    let query1;
 
-    db.pool.query(query5, function(error, rows, fields) { // Execute the query
+    // If there is no query string, we just perform a basic SELECT
+    if (req.query.invoice_id === undefined) {
+        query1 = "SELECT * FROM InvoiceItems;";
+    }
 
-            res.render('InvoiceItems', { data: rows }); // Render the InvoiceItems.hbs file, and also send the renderer
-        }) // an object where 'data' is equal to the 'rows'
+    // If there is a query string, we assume this is a search, and return desired results
+    else {
+        query1 = `SELECT * FROM InvoiceItems WHERE invoiceItem_id LIKE "${req.query.invoiceItem_id}%"`
+    }
+
+    // Query 2
+    let query2 = "SELECT * FROM Invoices;";
+
+    // Run the 1st query
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Save the invoices
+        let invoiceItems = rows;
+
+        let query3 = "SELECT * FROM Plants;";
+        // Run the second query
+        db.pool.query(query2, (error, rows, fields) => {
+
+            // Save the invoices
+            let invoices = rows;
+
+            // Construct an object for reference in the table
+            let invoicemap = {}
+            invoices.map(invoice => {
+                let invoice_id = parseInt(invoice.invoice_id, 10);
+
+                invoicemap[invoice_id] = invoice["invoice_id"];
+            })
+
+            // Run the third query
+            db.pool.query(query3, (error, rows, fields) => {
+
+                // Save the plants
+                let plants = rows;
+
+                // Construct an object for reference in the table
+                let plantmap = {}
+                plants.map(plant => {
+                    let plant_id = parseInt(plant.plant_id, 10);
+
+                    plantmap[plant_id] = plant["plant_name"];
+                })
+
+                // Overwrite the customer ID with the name of the customer in the invoices object
+                invoiceItems = invoiceItems.map(invoiceItem => {
+                    return Object.assign(invoiceItem, { invoice: invoicemap[invoiceItem.invoice_id], plant: plantmap[invoiceItem.plant_name] })
+                })
+
+                return res.render('InvoiceItems', { data: invoiceItems, invoices: invoices, plants: plants });
+            })
+        })
+    })
 });
+
 
 // POST Requests
 app.post('/add-cashier-ajax', function(req, res) {
@@ -80,7 +204,7 @@ app.post('/add-cashier-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data['input-cashier_first']}', '${data['input-cashier_last']}', '${data['input-hourly_rate']}')`;
+    query1 = `INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data.cashier_first}', '${data.cashier_last}', '${data.hourly_rate}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -89,7 +213,237 @@ app.post('/add-cashier-ajax', function(req, res) {
             console.log(error)
             res.sendStatus(400);
         } else {
-            res.send(rows);
+            // If there was no error, perform a SELECT * on Cashiers
+            query2 = `SELECT * FROM Cashiers;`;
+            db.pool.query(query2, function(error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-customer-ajax', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let email = (data.email);
+    if (email === '') {
+        email = 'NULL'
+    }
+
+    let street = (data.street);
+    if (street === '') {
+        street = 'NULL'
+    }
+
+    let city = (data.city);
+    if (city === '') {
+        city = 'NULL'
+    }
+
+    let state = (data.state);
+    if (state === '') {
+        state = 'NULL'
+    }
+
+    let zip = parseInt(data.zip);
+    if (isNaN(zip)) {
+        zip = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Customers (customer_first, customer_last, email, street, city, state, zip) VALUES ('${data.customer_first}', 
+        '${data.customer_last}', ${email}, ${street}, ${city}, ${state}, ${zip})`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            // If there was no error, perform a SELECT * on Customers
+            query2 = `SELECT * FROM Customers;`;
+            db.pool.query(query2, function(error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-plant-ajax', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Plants (plant_name, plant_price) VALUES ('${data.plant_name}', '${data.plant_price}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            // If there was no error, perform a SELECT * on Plants
+            query2 = `SELECT * FROM Plants;`;
+            db.pool.query(query2, function(error, rows, fields) {
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-invoice-ajax', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Capture NULL values
+    let cashier_id = parseInt(data.cashier_id);
+    if (isNaN(cashier_id)) {
+        cashier_id = 'NULL'
+    }
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', ${cashier_id}, '${data.total_price}', '${data.invoice_date}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            // If there was no error, perform a SELECT * on Invoices
+            query2 = `SELECT * FROM Invoices;`;
+            db.pool.query(query2, function(error, rows, fields) {
+
+                let invoices = rows;
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    query3 = `SELECT * FROM Customers;`;
+                    db.pool.query(query3, function(error, rows, fields) {
+
+                        // Save the customers
+                        let customers = rows;
+
+                        // Construct an object for reference in the table
+                        // Array.map is awesome for doing something with each
+                        // element of an array.
+                        let customermap = {}
+                        customers.map(customer => {
+                            let customer_id = parseInt(customer.customer_id, 10);
+
+                            customermap[customer_id] = customer["customer_last"];
+                        })
+
+                        invoices = invoices.map(invoice => {
+                            return Object.assign(invoice, { invoices: customermap[invoice.invoices] })
+                        })
+
+                        res.send(invoices);
+                    })
+                }
+            })
+        }
+    })
+});
+
+app.post('/add-invoiceItem-ajax', function(req, res) {
+    // Capture the incoming data and parse it back to a JS object
+    let data = req.body;
+
+    // Create the query and run it on the database
+    query1 = `INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) VALUES ('${data.invoice_id}', '${data.plant_id}', '${data.plant_quantity}')`;
+    db.pool.query(query1, function(error, rows, fields) {
+
+        // Check to see if there was an error
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error)
+            res.sendStatus(400);
+        } else {
+            // If there was no error, perform a SELECT * on Invoices
+            query2 = `SELECT * FROM InvoiceItems;`;
+            db.pool.query(query2, function(error, rows, fields) {
+
+                let invoiceItems = rows;
+
+                // If there was an error on the second query, send a 400
+                if (error) {
+
+                    // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+                    console.log(error);
+                    res.sendStatus(400);
+                }
+                // If all went well, send the results of the query back.
+                else {
+                    query3 = `SELECT * FROM Invoices;`;
+                    db.pool.query(query3, function(error, rows, fields) {
+
+                        // Save the invoices
+                        let invoices = rows;
+
+                        // Construct an object for reference in the table
+                        // Array.map is awesome for doing something with each
+                        // element of an array.
+                        let invoicemap = {}
+                        invoices.map(invoice => {
+                            let invoice_id = parseInt(invoice.invoice_id, 10);
+
+                            invoicemap[invoice_id] = invoice["invoice_id"];
+                        })
+
+                        invoiceItems = invoiceItems.map(invoiceItem => {
+                            return Object.assign(invoiceItem, { invoiceItems: invoicemap[invoiceItem.invoiceItems] })
+                        })
+
+                        res.send(invoiceItems);
+                    })
+                }
+            })
         }
     })
 });
@@ -109,86 +463,6 @@ app.delete('/delete-cashier/:cashier_id', function(req, res, next) {
     })
 });
 
-/*
-app.post('/add-plant-form', function(req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Plants (plant_name, plant_price) VALUES ('${data['input-plant_name']}', '${data['input-plant_price']}')`;
-    db.pool.query(query1, function(error, rows, fields) {
-
-        // Check to see if there was an error
-        if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        } else {
-            res.redirect('/Plants');
-        }
-    })
-});
-
-app.post('/add-customer-form', function(req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Customers (customer_first, customer_last, street, email, city, state, zip) 
-        VALUES ('${data['input-customer_first']}', '${data['input-customer_last']}', '${data['input-email']}', 
-        '${data['input-street']}', '${data['input-city']}','${data['input-state']}', '${data['input-zip']}')`;
-
-    db.pool.query(query1, function(error, rows, fields) {
-
-        // Check to see if there was an error
-        if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        } else {
-            res.redirect('/Customers');
-        }
-    })
-});
-
-app.post('/add-invoice-form', function(req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data['input-customer_id']}', '${data['input-cashier_id']}', '${data['input-total_price']}, '${data['input-invoice_date']}')`;
-    db.pool.query(query1, function(error, rows, fields) {
-
-        // Check to see if there was an error
-        if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        } else {
-            res.redirect('/Invoices');
-        }
-    })
-});
-
-app.post('/add-invoiceItems-form', function(req, res) {
-    // Capture the incoming data and parse it back to a JS object
-    let data = req.body;
-
-    // Create the query and run it on the database
-    query1 = `INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) VALUES ('${data['input-invoice_id']}', '${data['input-plant_id']}', '${data['input-plant_quantity']}')`;
-    db.pool.query(query1, function(error, rows, fields) {
-
-        // Check to see if there was an error
-        if (error) {
-            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
-            console.log(error)
-            res.sendStatus(400);
-        } else {
-            res.redirect('/InvoiceItems');
-        }
-    })
-});
-*/
 
 /*
     LISTENER

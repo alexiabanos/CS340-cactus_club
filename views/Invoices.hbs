@@ -1,3 +1,5 @@
+<!-- DELETE JS SCRIPT -->
+<script src="./js/invoice/delete_invoice.js"></script>
 
     <div class="table-responsive">
       <div class="table-wrapper">			
@@ -22,7 +24,7 @@
                 </table>
 
                 <!-- SEARCH BAR -->
-                <table class="table table-hover" >
+                {{!-- <table class="table table-hover" >
                   <thead class="table-light">
                     <tr>
                       <th>Search for Invoices:</th>
@@ -38,16 +40,18 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> --}}
 
                 <!-- DATA TABLE -->
-                <table class="table table-hover" id="cashiers-table">
+                <table class="table table-hover" id="invoices-table">
                     <thead class="table-light">
                       <tr>
-                        {{#each data.[0]}}
-                        <th>{{@key}}</th>
-                        {{/each}}
-                        <th> Edit / Delete </th>
+                        <th>invoice_id</th>
+						<th>customer_id</th>
+						<th>cashier_id</th>
+						<th>total_price</th>
+						<th>invoice_date</th>
+                        <th> Modify </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -78,7 +82,7 @@
 	<div id="addInvoiceModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
+				<form id="add-invoice-form-ajax">
 					<div class="modal-header">						
 						<h4 class="modal-title">Add Invoice</h4>
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
@@ -86,30 +90,45 @@
 					<div class="modal-body">
             		<p style="color:red;">Required Fields *</p>
 						<div class="form-group">
-							<label>Customer ID: *</label>
-							<input type="text" class="form-control">
+							<label class="mr-sm-2" for="input-customer_id">Customer ID: *</label>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-customer_id" id="input-customer_id">
+								<option value="">Select a Customer</option>
+								{{#each customers}}
+								<option value="{{this.customer_id}}">{{this.customer_first}}, {{this.customer_last}}</option>
+								{{/each}}
+							</select>
 						</div>						
 						<div class="form-group">
-							<label>Cashier ID: (Optional)</label>
-							<input type="text" class="form-control">
+							<label for="input-cashier_id">Cashier ID: (Optional)</label>
+							<br>
+							<select class="custom-select mr-sm-2" name="input-cashier_id" id="input-cashier_id">
+								<option value="">Select a Customer</option>
+								{{#each cashiers}}
+								<option value="{{this.cashier_id}}">{{this.cashier_last}}, {{this.cashier_first}}</option>
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
-							<label>Total Price: *</label>
-							<input type="text" class="form-control" required>
+							<label for="input-total_price">Total Price: *</label>
+							<input type="text" class="form-control" name="input-total_price" id="input-total_price" required>
 						</div>					
           				<div class="form-group">
-							<label>Invoice Date: *</label>
-							<input type="date" class="form-control" required>
+							<label for="input-invoice_date">Invoice Date: *</label>
+							<input type="date" class="form-control" name="input-invoice_date" id="input-invoice_date" required>
 						</div>				
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" href="Invoices" value="Add">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<!-- ADD JS SCRIPT -->
+	<script src="./js/invoice/add_invoice.js"></script>
 
 	<!-- EDIT MODAL -->
 	<div id="editInvoiceModal" class="modal">

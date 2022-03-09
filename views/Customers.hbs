@@ -1,5 +1,8 @@
 <!-- CUSTOMERS PAGE -->
 
+<!-- DELETE JS SCRIPT -->
+<script src="./js/customer/delete_customer.js"></script>
+
   <div class="table-responsive">
     <div class="table-wrapper">			
       <div style="margin-top:100px; margin-bottom: 100px;">
@@ -23,7 +26,7 @@
                 </table>
 
                 <!-- SEARCH BAR -->
-                <table class="table table-hover" >
+                {{!-- <table class="table table-hover" >
                   <thead class="table-light">
                     <tr>
                       <th>Search for Customers:</th>
@@ -39,7 +42,7 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> --}}
 
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="customers-table">
@@ -48,7 +51,7 @@
                         {{#each data.[0]}}
                         <th>{{@key}}</th>
                         {{/each}}
-                        <th> Edit / Delete </th>
+                        <th>Modify</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -81,7 +84,7 @@
 	<div id="addCustomerModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form id="add-cashier-form" method="POST" action="add-cashier-form">
+				<form id="add-customer-form-ajax">
 					<div class="modal-header">						
 						<h4 class="modal-title">Add Customer</h4>
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
@@ -89,14 +92,15 @@
 					<div class="modal-body">
             		<p style="color:red;">Required Fields *</p>						
 						<div class="form-group">
-							<label>Customer Last Name: *</label>
-							<input type="email" class="form-control" required>
+							<label for="input-customer_first">Customer First Name: *</label>
+							<input type="text" class="form-control" name="input-customer_first" id="input-customer_first" required>
+						</div>
+						<div class="form-group" for ="input-customer_last">
+							<label for="input-customer_last">Customer Last Name: *</label>
+							<input class="form-control" name="input-customer_last" id="input-customer_last"required></input>
 						</div>
 						<div class="form-group">
-							<label>Customer First Name: *</label>
-							<textarea class="form-control" required></textarea>
-						</div>
-						<div class="form-group">
+<<<<<<< HEAD
 							<label>Customer Email: (Optional)</label>
 							<input type="email" class="form-control" required>
 						</div>					
@@ -107,24 +111,39 @@
             			<div class="form-group">
 							<label>City: (Optional)</label>
 							<input type="text" class="form-control" required>
+=======
+							<label for="input-email">Customer Email: (Optional)</label>
+							<input type="email" class="form-control" name="input-email" id="input-email">
+						</div>					
+            <div class="form-group">
+							<label for="input-street">Street Address: (Optional)</label>
+							<input type="text" class="form-control" name="input-street" id="input-street">
 						</div>
             <div class="form-group">
-							<label>State: (Optional)</label>
-							<input type="text" class="form-control" required>
+							<label for="input-city">City: (Optional)</label>
+							<input type="text" class="form-control" name="input-city" id="input-city">
+>>>>>>> 0193680d033397f69628c4fdeba6cbb5912c6569
 						</div>
             <div class="form-group">
-							<label>ZipCode: (Optional)</label>
-							<input type="text" class="form-control" required>
+							<label for="input-state">State: (Optional)</label>
+							<input type="text" class="form-control" name="input-state" id="input-state">
+						</div>
+            <div class="form-group">
+							<label for="input-zip">ZipCode: (Optional)</label>
+							<input type="number" class="form-control" name="input-zip" id="input-zip">
 						</div>
           </div>					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-default" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" href="Customers" value="Add">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<!-- ADD JS SCRIPT -->
+	<script src="./js/customer/add_customer.js"></script>
 
 	<!-- EDIT MODAL -->
 	<div id="editCustomerModal" class="modal">

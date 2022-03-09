@@ -1,32 +1,32 @@
 // Get the objects we need to modify
-let addCashierForm = document.getElementById('add-cashier-form-ajax');
+let addInvoiceItemForm = document.getElementById('add-invoiceItem-form-ajax');
 
 // Modify the objects we need
-addCashierForm.addEventListener("submit", function(e) {
+addInvoiceItemForm.addEventListener("submit", function(e) {
 
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputCashierFirst = document.getElementById("input-cashier_first");
-    let inputCashierLast = document.getElementById("input-cashier_last");
-    let inputHourlyRate = document.getElementById("input-hourly_rate");
+    let inputInvoiceId = document.getElementById("input-invoice_id");
+    let inputPlantId = document.getElementById("input-plant_id");
+    let inputPlantQuantity = document.getElementById("input-plant_quantity");
 
     // Get the values from the form fields
-    let cashierFirstValue = inputCashierFirst.value;
-    let cashierLastValue = inputCashierLast.value;
-    let hourlyRateValue = inputHourlyRate.value;
+    let invoiceIdValue = inputInvoiceId.value;
+    let plantIdValue = inputPlantId.value;
+    let plantQuantityValue = inputPlantQuantity.value;
 
     // Put our data we want to send in a javascript object
     let data = {
-        cashier_first: cashierFirstValue,
-        cashier_last: cashierLastValue,
-        hourly_rate: hourlyRateValue,
+        invoice_id: invoiceIdValue,
+        plant_id: plantIdValue,
+        plant_quantity: plantQuantityValue,
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-cashier-ajax", true);
+    xhttp.open("POST", "/add-invoiceItem-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -37,9 +37,9 @@ addCashierForm.addEventListener("submit", function(e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputCashierFirst.value = '';
-            inputCashierLast.value = '';
-            inputHourlyRate.value = '';
+            inputInvoiceId.value = '';
+            inputPlantId.value = '';
+            inputPlantQuantity.value = '';
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -50,13 +50,10 @@ addCashierForm.addEventListener("submit", function(e) {
 
 })
 
-
-// Creates a single row from an Object representing a single record from 
-// Cashiers
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("cashiers-table");
+    let currentTable = document.getElementById("invoiceItems-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -67,43 +64,46 @@ addRowToTable = (data) => {
 
     // Create a row and 4 cells
     let row = document.createElement("TR");
-    let cashierIdCell = document.createElement("TD");
-    let cashierFirstCell = document.createElement("TD");
-    let cashierLastCell = document.createElement("TD");
-    let hourlyRateCell = document.createElement("TD");
+    let idCell = document.createElement("TD");
+    let invoiceIdCell = document.createElement("TD");
+    let plantIdCell = document.createElement("TD");
+    let plantQuantityCell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    cashierIdCell.innerText = newRow.cashier_id;
-    cashierFirstCell.innerText = newRow.cashier_first;
-    cashierLastCell.innerText = newRow.cashier_last;
-    hourlyRateCell.innerText = newRow.hourly_rate;
+    idCell.innerText = newRow.invoiceItem_id;
+    invoiceIdCell.innerText = newRow.invoice_id;
+    plantIdCell.innerText = newRow.plant_id;
+    plantQuantityCell.innerText = newRow.plant_quantity;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deletePerson(newRow.cashier_id);
+        deleteinvoiceItem(newRow.invoiceItem_id);
     };
 
     // Add the cells to the row 
-    row.appendChild(cashierIdCell);
-    row.appendChild(cashierFirstCell);
-    row.appendChild(cashierLastCell);
-    row.appendChild(hourlyRateCell);
+    row.appendChild(idCell);
+    row.appendChild(invoiceIdCell);
+    row.appendChild(plantIdCell);
+    row.appendChild(plantQuantityCell);
     row.appendChild(deleteCell);
 
     // Add a custom row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data-value', newRow.cashier_id);
+    row.setAttribute('data-value', newRow.invoiceItem_id);
 
     // Add the row to the table
     currentTable.appendChild(row);
+
+    // Dropdown menu for updating invoiceItems
 
     // Find drop down menu, create a new option, fill data in the option (full name, id),
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
-    option.text = newRow.cashier_first + ' ' + newRow.cashier_last;
-    option.value = newRow.cashier_id;
+    option.text = newRow.invoiceItem_id
+    option.value = newRow.invoiceItem_id;
     selectMenu.add(option);
+
 }

@@ -1,32 +1,44 @@
 // Get the objects we need to modify
-let addCashierForm = document.getElementById('add-cashier-form-ajax');
+let addcustomerForm = document.getElementById('add-customer-form-ajax');
 
 // Modify the objects we need
-addCashierForm.addEventListener("submit", function(e) {
+addcustomerForm.addEventListener("submit", function(e) {
 
     // Prevent the form from submitting
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputCashierFirst = document.getElementById("input-cashier_first");
-    let inputCashierLast = document.getElementById("input-cashier_last");
-    let inputHourlyRate = document.getElementById("input-hourly_rate");
+    let inputCustomerFirst = document.getElementById("input-customer_first");
+    let inputCustomerLast = document.getElementById("input-customer_last");
+    let inputEmail = document.getElementById("input-email");
+    let inputStreet = document.getElementById("input-street");
+    let inputCity = document.getElementById("input-city");
+    let inputState = document.getElementById("input-state");
+    let inputZip = document.getElementById("input-zip");
 
     // Get the values from the form fields
-    let cashierFirstValue = inputCashierFirst.value;
-    let cashierLastValue = inputCashierLast.value;
-    let hourlyRateValue = inputHourlyRate.value;
+    let customerFirstValue = inputCustomerFirst.value;
+    let customerLastValue = inputCustomerLast.value;
+    let emailValue = inputEmail.value;
+    let streetValue = inputStreet.value;
+    let cityValue = inputCity.value;
+    let stateValue = inputState.value;
+    let zipValue = inputZip.value;
 
     // Put our data we want to send in a javascript object
     let data = {
-        cashier_first: cashierFirstValue,
-        cashier_last: cashierLastValue,
-        hourly_rate: hourlyRateValue,
+        customer_first: customerFirstValue,
+        customer_last: customerLastValue,
+        email: emailValue,
+        street: streetValue,
+        city: cityValue,
+        state: stateValue,
+        zip: zipValue,
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/add-cashier-ajax", true);
+    xhttp.open("POST", "/add-customer-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -37,9 +49,14 @@ addCashierForm.addEventListener("submit", function(e) {
             addRowToTable(xhttp.response);
 
             // Clear the input fields for another transaction
-            inputCashierFirst.value = '';
-            inputCashierLast.value = '';
-            inputHourlyRate.value = '';
+            inputCustomerFirst.value = '';
+            inputCustomerLast.value = '';
+            inputEmail.value = '';
+            inputStreet.value = '';
+            inputCity.value = '';
+            inputState.value = '';
+            inputZip.value = '';
+
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
         }
@@ -53,7 +70,7 @@ addCashierForm.addEventListener("submit", function(e) {
 addRowToTable = (data) => {
 
     // Get a reference to the current table on the page and clear it out.
-    let currentTable = document.getElementById("cashiers-table");
+    let currentTable = document.getElementById("customers-table");
 
     // Get the location where we should insert the new row (end of table)
     let newRowIndex = currentTable.rows.length;
@@ -67,43 +84,55 @@ addRowToTable = (data) => {
     let idCell = document.createElement("TD");
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
-    let hourlyCell = document.createElement("TD");
+    let emailCell = document.createElement("TD");
+    let streetCell = document.createElement("TD");
+    let cityCell = document.createElement("TD");
+    let stateCell = document.createElement("TD");
+    let zipCell = document.createElement("TD");
 
     let deleteCell = document.createElement("TD");
 
     // Fill the cells with correct data
-    idCell.innerText = newRow.cashier_id;
-    firstNameCell.innerText = newRow.cashier_first;
-    lastNameCell.innerText = newRow.cashier_last;
-    hourlyCell.innerText = newRow.hourly_rate;
+    idCell.innerText = newRow.customer_id;
+    firstNameCell.innerText = newRow.customer_first;
+    lastNameCell.innerText = newRow.customer_last;
+    emailCell.innerText = newRow.email;
+    streetCell.innerText = newRow.street;
+    cityCell.innerText = newRow.city;
+    stateCell.innerText = newRow.state;
+    zipCell.innerText = newRow.zip;
 
     deleteCell = document.createElement("button");
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deleteCashier(newRow.cashier_id);
+        deleteCustomer(newRow.customer_id);
     };
 
     // Add the cells to the row 
     row.appendChild(idCell);
     row.appendChild(firstNameCell);
     row.appendChild(lastNameCell);
-    row.appendChild(hourlyCell);
+    row.appendChild(emailCell);
+    row.appendChild(streetCell);
+    row.appendChild(cityCell);
+    row.appendChild(stateCell);
+    row.appendChild(zipCell);
     row.appendChild(deleteCell);
 
     // Add a custom row attribute so the deleteRow function can find a newly added row
-    row.setAttribute('data-value', newRow.cashier_id);
+    row.setAttribute('data-value', newRow.customer_id);
 
     // Add the row to the table
     currentTable.appendChild(row);
 
-    // Dropdown menu for updating cashiers
+    // Dropdown menu for updating customers
 
     // Find drop down menu, create a new option, fill data in the option (full name, id),
     // then append option to drop down menu so newly created rows via ajax will be found in it without needing a refresh
     let selectMenu = document.getElementById("mySelect");
     let option = document.createElement("option");
-    option.text = newRow.cashier_first + ' ' + newRow.cashier_last;
-    option.value = newRow.id;
+    option.text = newRow.customer_first + ' ' + newRow.customer_last;
+    option.value = newRow.customer_id;
     selectMenu.add(option);
 
 }
