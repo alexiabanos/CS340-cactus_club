@@ -1,14 +1,29 @@
 function deleteCashier(cashier_id) {
-    let link = '/delete-cashier/';
-    link += cashier_id;
-    $.ajax({
-        url: link,
-        type: 'DELETE',
-        success: function(result) {
-            deleteRow(cashier_id);
+    // Put our data we want to send in a javascript object
+    let data = {
+        cashier_id: cashier_id
+    };
+
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/delete-cashier-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 204) {
+
+                // Add the new data to the table
+                deleteRow(cashier_id);
+
+            } else if (xhttp.readyState == 4 && xhttp.status != 204) {
+                console.log("There was an error with the input.")
+            }
         }
-    })
+        // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
 }
+
 
 function deleteRow(cashier_id) {
 
@@ -18,19 +33,7 @@ function deleteRow(cashier_id) {
         //rows would be accessed using the "row" variable assigned in the for loop
         if (table.rows[i].getAttribute("data-value") == cashier_id) {
             table.deleteRow(i);
-            deleteDropDownMenu(cashier_id);
             break;
         }
-    }
-}
-
-function deleteDropDownMenu(cashier_id) {
-    let selectMenu = document.getElementById("mySelect");
-    for (let i = 0; i < selectMenu.length; i++) {
-        if (Number(selectMenu.options[i].value) === Number(cashier_id)) {
-            selectMenu[i].remove();
-            break;
-        }
-
     }
 }

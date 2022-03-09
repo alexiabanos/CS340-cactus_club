@@ -25,7 +25,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(__dirname + '/public')); // this is needed to allow for the form to use the ccs style sheet/javscript
 
-// GET Requests
+/*
+    GET Requests
+*/
 app.get('/', (req, res) => {
     res.render('index')
 });
@@ -232,6 +234,10 @@ app.post('/add-cashier-ajax', function(req, res) {
         }
     })
 });
+
+/*
+    POST Requests
+*/
 
 app.post('/add-customer-ajax', function(req, res) {
     // Capture the incoming data and parse it back to a JS object
@@ -448,14 +454,78 @@ app.post('/add-invoiceItem-ajax', function(req, res) {
     })
 });
 
-app.delete('/delete-cashier/:cashier_id', function(req, res, next) {
+/*
+    DELETE
+*/
+
+app.delete('/delete-cashier-ajax/', function(req, res, next) {
     let data = req.body;
-    let deleteCashiers = `DELETE FROM Cashiers WHERE pid = ?`;
+    let cashier_id = parseInt(data.cashier_id);
+    let deleteCashier = `DELETE FROM Cashiers WHERE cashier_id = ?`;
 
     // Run the 1st query
-    db.pool.query(deleteCashiers, [req.params.cashier_id], function(error, rows, fields) {
+    db.pool.query(deleteCashier, [cashier_id], function(error, rows, fields) {
         if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
 
+app.delete('/delete-customer-ajax/', function(req, res, next) {
+    let data = req.body;
+    let customer_id = parseInt(data.customer_id);
+    let deleteCustomer = `DELETE FROM Customers WHERE customer_id = ?`;
+
+    // Run the 1st query
+    db.pool.query(deleteCustomer, [customer_id], function(error, rows, fields) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+app.delete('/delete-invoiceItem-ajax/', function(req, res, next) {
+    let data = req.body;
+    let invoiceItem_id = parseInt(data.invoiceItem_id);
+    let deleteInvoiceItem = `DELETE FROM InvoiceItems WHERE invoiceItem_id = ?`;
+
+    // Run the 1st query
+    db.pool.query(deleteInvoiceItem, [invoiceItem_id], function(error, rows, fields) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+app.delete('/delete-invoice-ajax/', function(req, res, next) {
+    let data = req.body;
+    let invoice_id = parseInt(data.invoice_id);
+    let deleteInvoice = `DELETE FROM Invoices WHERE invoice_id = ?`;
+
+    // Run the 1st query
+    db.pool.query(deleteInvoice, [invoice_id], function(error, rows, fields) {
+        if (error) {
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+    })
+});
+
+app.delete('/delete-plant-ajax/', function(req, res, next) {
+    let data = req.body;
+    let plant_id = parseInt(data.plant_id);
+    let deletePlant = `DELETE FROM Plants WHERE plant_id = ?`;
+
+    // Run the 1st query
+    db.pool.query(deletePlant, [plant_id], function(error, rows, fields) {
+        if (error) {
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
             console.log(error);
             res.sendStatus(400);

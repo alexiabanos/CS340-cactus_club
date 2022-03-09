@@ -78,6 +78,7 @@ addRowToTable = (data) => {
     plantQuantityCell.innerText = newRow.plant_quantity;
 
     deleteCell = document.createElement("button");
+    deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deleteinvoiceItem(newRow.invoiceItem_id);

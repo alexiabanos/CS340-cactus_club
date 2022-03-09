@@ -26,33 +26,13 @@
                   </tbody>
                 </table>
 
-                <!-- SEARCH BAR -->
-                {{!-- <table class="table table-hover" >
-                  <thead class="table-light">
-                    <tr>
-                      <th>Search for Invoice Items:</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="5">
-                        <div class="input-group">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Invoice Item ID">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> --}}
-
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="invoiceItems-table">
                     <thead class="table-light">
                       <tr>
-                        <th>invoiceItem_id</th>
-						<th>invoice_id</th>
-						<th>plant_id</th>
-						<th>plant_quantity</th>
+                        {{#each data.[0]}}
+                        <th>{{@key}}</th>
+                        {{/each}}
                         <th> Modify </th>
                       </tr>
                     </thead>
@@ -63,13 +43,9 @@
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_quantity}}</td>
-                        <!-- update / DELETE -->
-                        <td>
-                          <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="update">&#xE254;</i></a>
-                          <a href="#deleteInvoiceItemModal" class="delete" data-bs-toggle="modal">
-                          <i class="material-icons" data-bs-toggle="tooltip" data-bs-target="deleteInvoiceItemModal"title="Delete">&#xE872;</i></a>
-                          </td>
+                        
+						<!-- DELETE -->
+						<td><a href="/InvoiceItems"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoiceItem({{this.invoiceItem_id}})">Delete</button></a></td>
                       </tr>
                       {{/each}}
                     </tbody>
