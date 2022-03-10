@@ -14,17 +14,20 @@
                 <hr>
                 <p>Use this page to add, update, update or remove the details individual Invoice Items on Invoices of a customer's purchase:</p>
 
-                <!-- ADD BUTTON -->
+                <!-- ADD / EDIT BUTTONS -->
                 <table>
 					<tbody>
                     <tr>
-                      <td colspan="6" align="left">
-                      <a href="#addInvoiceItemModal" class="update" data-bs-toggle="modal">
+                      <td>
+                      <a href="#addInvoiceItemModal" class="add" data-bs-toggle="modal">
                       <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
+                      <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Add">Update an Invoice Item </button></a>
                       </td>
                     </tr>
                   </tbody>
                 </table>
+
 
                 <!-- DATA TABLE -->
                 <table class="table table-hover" id="invoiceItems-table">
@@ -106,28 +109,50 @@
 	<div id="updateInvoiceItemModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form>
+				<form id="update-invoiceItem-form-ajax">
 					<div class="modal-header">						
 						<h4 class="modal-title">Update Invoice Item</h4>
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					  <div class="modal-body">
-            			<p style="color:red;">Required Fields *</p>						
+            			<p style="color:red;">Required Fields *</p>
+						<p><b>Select the Invoice Item you would like to update:</b></p>					
 						<div class="form-group">
-							<label>Invoice Item ID: *</label>
-							<input type="text" class="form-control" required>
+							<label for="input-invoiceItem_id-update">Invoice Item ID: *</label>
+							<br>
+							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
+								<option value="">Select...</option>
+								{{#each data}}
+								<option value="{{this.invoiceItem_id}}">{{this.invoiceItem_id}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="input-invoice_id-update">Update Invoice ID: *</label>
+							<br>
+							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
+								<option value="">Select...</option>
+								{{#each data}}
+								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
-							<label>Invoice ID: *</label>
-							<input type="text" class="form-control" required>
+							<label for="input-plant_id-update">Update Plant ID: *</label>
+							<br>
+							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
+								<option value="">Select...</option>
+								{{#each data}}
+								<option value="{{this.plant_id}}">{{this.plant_id}}</option>
+								{{/each}}
+							</select>
 						</div>
 						<div class="form-group">
-							<label>Plant ID: *</label>
-							<input type="text" class="form-control" required>
-						</div>
-						<div class="form-group">
-							<label>Plant Quantity: *</label>
-							<input type="text" class="form-control" min="0" max="9999" step="1" required>
+							<label for="input-plant_quantity">Update Plant Quantity: *</label>
+							<br>
+							<input name="input-plant_id-update" id="input-plant_id-update" type="text" class="form-control" min="0" max="9999" step="1" required>
 						</div>
             		</div>
 					  <div class="modal-footer">
