@@ -542,8 +542,8 @@ app.post('/post-invoiceItem-ajax', function(req, res, next) {
 
     let new_plant_quantity = parseInt(data.plant_quantity);
 
-    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItems_id = ?`;
-    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE id = ?`
+    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
+    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`
 
     // Run the 1st query
     db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity], function(error, rows, fields) {
