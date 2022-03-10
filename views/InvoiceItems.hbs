@@ -130,26 +130,6 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="input-invoice_id-update">Update Invoice ID: *</label>
-							<br>
-							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
-								<option value="">Select...</option>
-								{{#each data}}
-								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
-								{{/each}}
-							</select>
-						</div>
-						<div class="form-group">
-							<label for="input-plant_id-update">Update Plant ID: *</label>
-							<br>
-							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
-								<option value="">Select...</option>
-								{{#each data}}
-								<option value="{{this.plant_id}}">{{this.plant_id}}</option>
-								{{/each}}
-							</select>
-						</div>
-						<div class="form-group">
 							<label for="input-plant_quantity">Update Plant Quantity: *</label>
 							<br>
 							<input name="input-plant_quantity-update" id="input-plant_quantity-update" type="text" class="form-control" min="0" max="9999" step="1" required>

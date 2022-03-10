@@ -536,14 +536,14 @@ app.delete('/delete-plant-ajax/', function(req, res, next) {
     PUT Requests
 */
 
-app.post('/post-invoiceItem-ajax', function(req, res, next) {
+app.put('/put-invoiceItem-ajax', function(req, res, next) {
     console.log("start of put");
     let data = req.body;
 
     let new_plant_quantity = parseInt(data.plant_quantity);
 
     let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
-    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`
+    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`;
 
     // Run the 1st query
     db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity], function(error, rows, fields) {

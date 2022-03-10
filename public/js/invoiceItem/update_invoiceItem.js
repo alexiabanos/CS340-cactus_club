@@ -8,13 +8,11 @@ updateInvoiceForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
     // Get form fields we need to get data from
-    let inputInvoiceId = document.getElementById("input-invoice_id-update");
-    let inputPlantId = document.getElementById("input-plant_id-update");
+    let inputInvoiceItemId = document.getElementById("input-invoiceItem_id-update");
     let inputPlantQuantity = document.getElementById("input-plant_quantity-update");
 
     // Get the values from the form fields
-    let invoiceIDValue = inputInvoiceId.value;
-    let plantIdValue = inputPlantId.value;
+    let invoiceItemIDValue = inputInvoiceItemId.value;
     let plantQuantityValue = inputPlantQuantity.value;
 
     // Plant quantity can't be null
@@ -24,14 +22,13 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
     // Put our data we want to send in a javascript object
     let data = {
-        invoice_id: invoiceIDValue,
-        plant_id: plantIdValue,
+        invoiceItem_id: invoiceItemIDValue,
         plant_quantity: plantQuantityValue
     }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/post-invoiceItem-ajax", true);
+    xhttp.open("PUT", "/put-invoiceItem-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -48,6 +45,7 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
+    console.log("submit event listener done");
 })
 
 
@@ -72,4 +70,5 @@ function updateRow(data, invoiceItem_id) {
             td.innerHTML = parsedData[0].plant_quantity;
         }
     }
+
 }
