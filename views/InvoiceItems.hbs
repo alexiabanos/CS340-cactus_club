@@ -39,7 +39,7 @@
                     </thead>
                     <tbody>
                       {{#each data}}
-                      <tr>
+                      <tr data-value={{this.invoiceItem_id}}>
                         <td>{{this.invoiceItem_id}}</td>
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.plant_id}}</td>

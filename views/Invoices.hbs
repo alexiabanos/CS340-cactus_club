@@ -37,7 +37,7 @@
                     </thead>
                     <tbody>
                       {{#each data}}
-                      <tr>
+                      <tr data-value={{this.invoice_id}}>
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.customer_id}}</td>
                         <td>{{this.cashier_id}}</td>

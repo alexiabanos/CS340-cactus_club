@@ -36,18 +36,18 @@
                       </tr>
                     </thead>
                     <tbody>
-                      {{#each data}}
-                      <tr>
-                        <td>{{this.customer_id}}</td>
-                        <td>{{this.customer_last}}</td>
-                        <td>{{this.customer_first}}</td>
-                        <td>{{this.customer_email}}</td>
-                        <td>{{this.customer_address}}</td>
-                        <td>{{this.customer_city}}</td>
-                        <td>{{this.customer_state}}</td>
-                        <td>{{this.customer_zip}}</td>
+                      	{{#each data}}
+                      	<tr data-value={{this.customer_id}}>
+						<td>{{this.customer_id}}</td>
+						<td>{{this.customer_last}}</td>
+						<td>{{this.customer_first}}</td>
+						<td>{{this.customer_email}}</td>
+						<td>{{this.customer_address}}</td>
+						<td>{{this.customer_city}}</td>
+						<td>{{this.customer_state}}</td>
+						<td>{{this.customer_zip}}</td>
 
-                        <!-- DELETE -->
+						<!-- DELETE -->
 						<td><a href="/Customers"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteCustomer({{this.customer_id}})">Delete</button></a></td>
                       </tr>
                       {{/each}}

@@ -83,7 +83,8 @@ addRowToTable = (data) => {
     deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deleteinvoiceItem(newRow.invoiceItem_id);
+        deleteInvoiceItem(newRow.invoiceItem_id);
+        window.location.reload();
     };
 
     // Add the cells to the row 

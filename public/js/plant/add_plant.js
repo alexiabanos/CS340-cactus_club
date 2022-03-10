@@ -77,7 +77,8 @@ addRowToTable = (data) => {
     deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
-        deletePerson(newRow.plant_id);
+        deletePlant(newRow.plant_id);
+        window.location.reload();
     };
 
     // Add the cells to the row 

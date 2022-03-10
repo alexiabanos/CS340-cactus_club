@@ -90,6 +90,7 @@ addRowToTable = (data) => {
     deleteCell.innerHTML = "Delete";
     deleteCell.onclick = function() {
         deleteInvoice(newRow.invoice_id);
+        window.location.reload();
     };
 
     // Add the cells to the row 
