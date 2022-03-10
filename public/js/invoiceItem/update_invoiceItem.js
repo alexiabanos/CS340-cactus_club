@@ -54,7 +54,7 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 function updateRow(data, invoiceItem_id) {
     let parsedData = JSON.parse(data);
 
-    let table = document.getElementById("invoiceItem-table");
+    let table = document.getElementById("invoiceItems-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         console.log(table.rows[i].getAttribute('data-value'));

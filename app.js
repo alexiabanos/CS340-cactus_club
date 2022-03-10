@@ -532,6 +532,45 @@ app.delete('/delete-plant-ajax/', function(req, res, next) {
     })
 });
 
+/*
+    PUT Requests
+*/
+
+app.post('/post-invoiceItem-ajax', function(req, res, next) {
+    console.log("start of put");
+    let data = req.body;
+
+    let new_plant_quantity = parseInt(data.plant_quantity);
+
+    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItems_id = ?`;
+    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE id = ?`
+
+    // Run the 1st query
+    db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity], function(error, rows, fields) {
+        if (error) {
+
+            // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
+            console.log(error);
+            res.sendStatus(400);
+        }
+
+        // If there was no error, we run our second query and return that data so we can use it to update the people's
+        // table on the front-end
+        else {
+            // Run the second query
+            db.pool.query(selectInvoiceItem, [new_plant_quantity], function(error, rows, fields) {
+
+                if (error) {
+                    console.log(error);
+                    res.sendStatus(400);
+                } else {
+                    res.send(rows);
+                }
+            })
+        }
+    })
+    console.log("end of put");
+});
 
 /*
     LISTENER
