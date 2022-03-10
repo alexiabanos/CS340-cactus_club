@@ -15,6 +15,7 @@ function deleteCustomer(customer_id) {
 
                 // Add the new data to the table
                 deleteRow(customer_id);
+                window.location.reload();
 
             } else if (xhttp.readyState == 4 && xhttp.status != 204) {
                 console.log("There was an error with the input.")

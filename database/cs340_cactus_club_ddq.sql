@@ -41,18 +41,18 @@ CREATE TABLE `Customers` (
   `customer_id` int(6) NOT NULL,
   `customer_last` varchar(50) NOT NULL,
   `customer_first` varchar(50) NOT NULL,
-  `street` varchar(50) DEFAULT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `state` varchar(2) DEFAULT NULL,
-  `zip` int(5) DEFAULT NULL
+  `customer_street` varchar(50) DEFAULT NULL,
+  `customer_email` varchar(50) DEFAULT NULL,
+  `customer_city` varchar(50) DEFAULT NULL,
+  `customer_state` varchar(2) DEFAULT NULL,
+  `customer_zip` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `Customers`
 --
 
-INSERT INTO `Customers` (`customer_id`, `customer_last`, `customer_first`, `street`, `email`, `city`, `state`, `zip`) VALUES
+INSERT INTO `Customers` (`customer_id`, `customer_last`, `customer_first`, `customer_street`, `customer_email`, `customer_city`, `customer_state`, `customer_zip`) VALUES
 (159263, 'Geller', 'Ross', '27 Madison', 'rgeller@yahoo.com', 'New York', 'NY', 10019),
 (159264, 'Green', 'Rachel', '23 Park Ave', 'rachelgrn@gmail.com', 'New York', 'NY', 10016),
 (159265, 'Buffay', 'Phoebe', '806 Jefferson', 'phoebo@sbcglobal.net', 'New York', 'NY', 10019);

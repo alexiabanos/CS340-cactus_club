@@ -36,8 +36,11 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
             // Add the new data to the table
             updateRow(xhttp.response, plantQuantityValue);
+            window.location.reload();
 
-        } else if (xhttp.readyState == 4 && xhttp.status != 200) {}
+        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
+            console.log("There was an error with the input.")
+        }
     }
 
     // Send the request and wait for the response
