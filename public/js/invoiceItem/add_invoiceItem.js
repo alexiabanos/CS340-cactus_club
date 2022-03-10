@@ -64,13 +64,13 @@ addRowToTable = (data) => {
     let newRow = parsedData[parsedData.length - 1]
 
     // Create a row and 4 cells
-    let row = document.createElement("TR");
-    let idCell = document.createElement("TD");
-    let invoiceIdCell = document.createElement("TD");
-    let plantIdCell = document.createElement("TD");
-    let plantQuantityCell = document.createElement("TD");
+    let row = document.createElement("tr");
+    let idCell = document.createElement("td");
+    let invoiceIdCell = document.createElement("td");
+    let plantIdCell = document.createElement("td");
+    let plantQuantityCell = document.createElement("td");
 
-    let deleteCell = document.createElement("TD");
+    let deleteCell = document.createElement("td");
 
     // Fill the cells with correct data
     idCell.innerText = newRow.invoiceItem_id;

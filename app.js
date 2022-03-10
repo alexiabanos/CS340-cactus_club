@@ -537,16 +537,15 @@ app.delete('/delete-plant-ajax/', function(req, res, next) {
 */
 
 app.put('/put-invoiceItem-ajax', function(req, res, next) {
-    console.log("start of put");
     let data = req.body;
-
+    let invoiceItem_id = parseInt(data.invoiceItem_id);
     let new_plant_quantity = parseInt(data.plant_quantity);
 
     let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
     let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`;
 
     // Run the 1st query
-    db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity], function(error, rows, fields) {
+    db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity, invoiceItem_id], function(error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -569,7 +568,6 @@ app.put('/put-invoiceItem-ajax', function(req, res, next) {
             })
         }
     })
-    console.log("end of put");
 });
 
 /*

@@ -3,7 +3,6 @@ let updateInvoiceForm = document.getElementById('update-invoiceItem-form-ajax');
 
 // Modify the objects we need
 updateInvoiceForm.addEventListener("submit", function(e) {
-    console.log("submit event listener starting");
     // Prevent the form from submitting
     e.preventDefault();
 
@@ -38,14 +37,12 @@ updateInvoiceForm.addEventListener("submit", function(e) {
             // Add the new data to the table
             updateRow(xhttp.response, plantQuantityValue);
 
-        } else if (xhttp.readyState == 4 && xhttp.status != 200) {
-            console.log("There was an error with the input.")
-        }
+        } else if (xhttp.readyState == 4 && xhttp.status != 200) {}
     }
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-    console.log("submit event listener done");
+    window.location.reload();
 })
 
 

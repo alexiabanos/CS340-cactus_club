@@ -61,7 +61,7 @@ INSERT INTO Invoices (invoice_id, customer_id, cashier_id, total_price, invoice_
 VALUES (:customer_id_from_dropdown_Input, :cashier_id_from_dropdown_Input, :totalpriceInput, :dateInput);
 
 --
--- associate a Plant with an Inovice (M-to-M relationship addition)
+-- associate a Plant with an Invoice (M-to-M relationship addition)
 --
 INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) 
 VALUES (:invoice_id_from_dropdown_Input, :plant_id_from_dropdown_Input, :quantityInput);
@@ -100,7 +100,7 @@ WHERE cashier_id= :cashier_ID_from_update_form;
 -- update an Invoice Item's data based on submission of the Update InvoiceItem form 
 --
 UPDATE InvoiceItems 
-SET invoice_id = :invoice_id_from_dropdown_Input, plant_id = :plant_id_from_dropdown_Input, plant_quantity = :quantityInput
+SET plant_quantity = :quantityInput
 WHERE invoiceItem_id = :invoiceItem_ID_from_update_form;
 
 -- --------------------------------------------------------
