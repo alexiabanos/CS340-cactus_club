@@ -22,7 +22,6 @@ function deleteCashier(cashier_id) {
         }
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-    
 }
 
 
