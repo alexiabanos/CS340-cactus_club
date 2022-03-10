@@ -568,6 +568,7 @@ app.put('/put-invoiceItem-ajax', function(req, res, next) {
             })
         }
     })
+    window.location.reload();
 });
 
 /*
