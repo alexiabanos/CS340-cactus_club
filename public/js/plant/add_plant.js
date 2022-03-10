@@ -43,6 +43,8 @@ addPlantForm.addEventListener("submit", function(e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
+    // Dismiss Modal
+    $(".modal").modal("hide");
 
 })
 

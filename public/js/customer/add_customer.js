@@ -10,30 +10,30 @@ addcustomerForm.addEventListener("submit", function(e) {
     // Get form fields we need to get data from
     let inputCustomerFirst = document.getElementById("input-customer_first");
     let inputCustomerLast = document.getElementById("input-customer_last");
-    let inputEmail = document.getElementById("input-email");
-    let inputStreet = document.getElementById("input-street");
-    let inputCity = document.getElementById("input-city");
-    let inputState = document.getElementById("input-state");
-    let inputZip = document.getElementById("input-zip");
+    let inputCustomerEmail = document.getElementById("input-customer_email");
+    let inputCustomerAddress = document.getElementById("input-customer_address");
+    let inputCustomerCity = document.getElementById("input-customer_city");
+    let inputCustomerState = document.getElementById("input-customer_state");
+    let inputCustomerZip = document.getElementById("input-customer_zip");
 
     // Get the values from the form fields
     let customerFirstValue = inputCustomerFirst.value;
     let customerLastValue = inputCustomerLast.value;
-    let emailValue = inputEmail.value;
-    let streetValue = inputStreet.value;
-    let cityValue = inputCity.value;
-    let stateValue = inputState.value;
-    let zipValue = inputZip.value;
+    let customerEmailValue = inputCustomerEmail.value;
+    let customerAddressValue = inputCustomerAddress.value;
+    let customerCityValue = inputCustomerCity.value;
+    let customerStateValue = inputCustomerState.value;
+    let customerZipValue = inputCustomerZip.value;
 
     // Put our data we want to send in a javascript object
     let data = {
         customer_first: customerFirstValue,
         customer_last: customerLastValue,
-        email: emailValue,
-        street: streetValue,
-        city: cityValue,
-        state: stateValue,
-        zip: zipValue,
+        customer_email: customerEmailValue,
+        customer_address: customerAddressValue,
+        customer_city: customerCityValue,
+        customer_state: customerStateValue,
+        customer_zip: customerZipValue,
     }
 
     // Setup our AJAX request
@@ -51,11 +51,11 @@ addcustomerForm.addEventListener("submit", function(e) {
             // Clear the input fields for another transaction
             inputCustomerFirst.value = '';
             inputCustomerLast.value = '';
-            inputEmail.value = '';
-            inputStreet.value = '';
-            inputCity.value = '';
-            inputState.value = '';
-            inputZip.value = '';
+            inputCustomerEmail.value = '';
+            inputCustomerAddress.value = '';
+            inputCustomerCity.value = '';
+            inputCustomerState.value = '';
+            inputCustomerZip.value = '';
 
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -64,6 +64,8 @@ addcustomerForm.addEventListener("submit", function(e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
+    // Dismiss Modal
+    $(".modal").modal("hide");
 
 })
 
@@ -85,7 +87,7 @@ addRowToTable = (data) => {
     let firstNameCell = document.createElement("TD");
     let lastNameCell = document.createElement("TD");
     let emailCell = document.createElement("TD");
-    let streetCell = document.createElement("TD");
+    let addressCell = document.createElement("TD");
     let cityCell = document.createElement("TD");
     let stateCell = document.createElement("TD");
     let zipCell = document.createElement("TD");
@@ -96,11 +98,11 @@ addRowToTable = (data) => {
     idCell.innerText = newRow.customer_id;
     firstNameCell.innerText = newRow.customer_first;
     lastNameCell.innerText = newRow.customer_last;
-    emailCell.innerText = newRow.email;
-    streetCell.innerText = newRow.street;
-    cityCell.innerText = newRow.city;
-    stateCell.innerText = newRow.state;
-    zipCell.innerText = newRow.zip;
+    emailCell.innerText = newRow.customer_email;
+    addressCell.innerText = newRow.customer_address;
+    cityCell.innerText = newRow.customer_city;
+    stateCell.innerText = newRow.customer_state;
+    zipCell.innerText = newRow.customer_zip;
 
     deleteCell = document.createElement("button");
     deleteCell.className = "btn btn-outline-danger my-2 my-sm-0";
@@ -114,7 +116,7 @@ addRowToTable = (data) => {
     row.appendChild(firstNameCell);
     row.appendChild(lastNameCell);
     row.appendChild(emailCell);
-    row.appendChild(streetCell);
+    row.appendChild(addressCell);
     row.appendChild(cityCell);
     row.appendChild(stateCell);
     row.appendChild(zipCell);

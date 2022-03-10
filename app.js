@@ -244,34 +244,33 @@ app.post('/add-customer-ajax', function(req, res) {
     let data = req.body;
 
     // Capture NULL values
-    let email = (data.email);
-    if (email === '') {
-        email = 'NULL'
+    let customer_email = (data.customer_email);
+    if (customer_email == null) {
+        customer_email = NULL;
     }
 
-    let street = (data.street);
-    if (street === '') {
-        street = 'NULL'
+    let customer_address = (data.customer_address);
+    if (customer_address == null) {
+        customer_address = NULL;
     }
 
-    let city = (data.city);
-    if (city === '') {
-        city = 'NULL'
+    let customer_city = (data.customer_city);
+    if (customer_city == null) {
+        customer_city = NULL;
     }
 
-    let state = (data.state);
-    if (state === '') {
-        state = 'NULL'
+    let customer_state = (data.customer_state);
+    if (customer_state == null) {
+        customer_state = NULL;
     }
 
-    let zip = parseInt(data.zip);
-    if (isNaN(zip)) {
-        zip = 'NULL'
+    let customer_zip = parseInt(data.customer_zip);
+    if (customer_zip == null) {
+        customer_zip = NULL;
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Customers (customer_first, customer_last, email, street, city, state, zip) VALUES ('${data.customer_first}', 
-        '${data.customer_last}', ${email}, ${street}, ${city}, ${state}, ${zip})`;
+    query1 = `INSERT INTO Customers (customer_first, customer_last, customer_email, customer_address, customer_city, customer_state, customer_zip) VALUES ('${data.customer_first}', '${data.customer_last}', '${customer_email}', '${customer_address}', '${customer_city}', '${customer_state}', '${customer_zip}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
