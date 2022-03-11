@@ -45,7 +45,7 @@ updateInvoiceForm.addEventListener("submit", function(e) {
     // Get the values from the form fields
     let invoiceItemIDValue = inputInvoiceItemId.value;
     let invoiceIDValue = inputInvoiceId.value;
-    let plantIDValue = inputplantId.value;
+    let plantIDValue = inputPlantId.value;
     let plantQuantityValue = inputPlantQuantity.value;
 
     // Plant quantity can't be null
