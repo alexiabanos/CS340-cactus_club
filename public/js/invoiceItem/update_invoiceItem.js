@@ -1,3 +1,33 @@
+function getData(invoiceItem_id) {
+    // Put our data we want to send in a javascript object
+    let data = {
+        invoiceItem_id: invoiceItem_id,
+        invoice_id: invoice_id,
+        plant_id: plant_id,
+        plant_quantity: plant_quantity
+    };
+
+    // Setup our AJAX request
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("DELETE", "/delete-invoiceItem-ajax", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+
+    // Tell our AJAX request how to resolve
+    xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4 && xhttp.status == 204) {
+
+                // Add the new data to the table
+                deleteRow(invoiceItem_id);
+                window.location.reload();
+
+            } else if (xhttp.readyState == 4 && xhttp.status != 204) {
+                console.log("There was an error with the input.")
+            }
+        }
+        // Send the request and wait for the response
+    xhttp.send(JSON.stringify(data));
+}
+
 // Get the objects we need to modify
 let updateInvoiceForm = document.getElementById('update-invoiceItem-form-ajax');
 

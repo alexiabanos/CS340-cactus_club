@@ -22,7 +22,7 @@
                       <a href="#addInvoiceItemModal" class="add" data-bs-toggle="modal">
                       <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
                       <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
-                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Add">Update an Invoice Item </button></a>
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Update">Update an Invoice Item </button></a>
                       </td>
                     </tr>
                   </tbody>
@@ -37,7 +37,8 @@
 						<th>invoice_id</th>
 						<th>plant_id</th>
 						<th>plant_quantity</th>
-                        <th> Delete </th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -50,6 +51,8 @@
                         
 						<!-- DELETE -->
 						<td><a href="/InvoiceItems"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoiceItem({{this.invoiceItem_id}})">Delete</button></a></td>
+						<!-- Update -->
+						<td><a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal"><button class="btn btn-outline-warning my-2 my-sm-0" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" onclick="getData({{this.invoiceItem_id}})" title="Update">Update</button></a></td>
                       </tr>
                       {{/each}}
                     </tbody>
@@ -80,7 +83,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="input-invoice_id">Plant ID: *</label>
+							<label for="input-invoice_id">Plant Name: *</label>
 							<br>
 							<select class="custom-select mr-sm-2" name="input-plant_id" id="input-plant_id" required />
 								<option value="">Select a Plant</option>
@@ -121,9 +124,33 @@
 							<label for="input-invoiceItem_id-update">Invoice Item ID: *</label>
 							<br>
 							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
-								<option value="">Select...</option>
+								<option value="">{{data.invoiceItem_id}}</option>
 								{{#each data}}
 								<option value="{{this.invoiceItem_id}}">{{this.invoiceItem_id}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="input-invoiceItem_id-update">Invoice ID: *</label>
+							<br>
+							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
+								<option value="">{{data.invoice_id}}</option>
+								{{#each data}}
+								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
+								{{/each}}
+							</select>
+							<br>
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="input-invoiceItem_id-update">Plant: *</label>
+							<br>
+							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
+								<option value="">{{data.invoiceItem_id}}</option>
+								{{#each plants}}
+								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
 								{{/each}}
 							</select>
 							<br>

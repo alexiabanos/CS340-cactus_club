@@ -532,6 +532,7 @@ app.delete('/delete-plant-ajax/', function(req, res, next) {
     })
 });
 
+
 /*
     PUT Requests
 */
@@ -539,13 +540,15 @@ app.delete('/delete-plant-ajax/', function(req, res, next) {
 app.put('/put-invoiceItem-ajax', function(req, res, next) {
     let data = req.body;
     let invoiceItem_id = parseInt(data.invoiceItem_id);
-    let new_plant_quantity = parseInt(data.plant_quantity);
+    let invoice_id = parseInt(data.invoice_id);
+    let plant_id = parseInt(data.plant_id);
+    let plant_quantity = parseInt(data.plant_quantity);
 
-    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
+    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET invoice_id = ?, plant_id = ?, plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
     let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`;
 
     // Run the 1st query
-    db.pool.query(queryUpdateInvoiceItem, [new_plant_quantity, invoiceItem_id], function(error, rows, fields) {
+    db.pool.query(queryUpdateInvoiceItem, [invoice_id, plant_id, plant_quantity, invoiceItem_id], function(error, rows, fields) {
         if (error) {
 
             // Log the error to the terminal so we know what went wrong, and send the visitor an HTTP response 400 indicating it was a bad request.
@@ -557,7 +560,7 @@ app.put('/put-invoiceItem-ajax', function(req, res, next) {
         // table on the front-end
         else {
             // Run the second query
-            db.pool.query(selectInvoiceItem, [new_plant_quantity], function(error, rows, fields) {
+            db.pool.query(selectInvoiceItem, [invoiceItem_id], function(error, rows, fields) {
 
                 if (error) {
                     console.log(error);
