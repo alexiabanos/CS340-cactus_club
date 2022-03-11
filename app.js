@@ -77,9 +77,9 @@ app.get('/Invoices', (req, res) => {
     // Declare Query 1
     let query1;
 
-    // If there is no query string, we just perform a basic SELECT
+    // SELECT Query
     if (req.query.invoice_id === undefined) {
-        query1 = "SELECT * FROM Invoices;";
+        query1 = "SELECT invoice_id, CONCAT(customer_first,'  ',customer_last) AS customer_name, CONCAT(cashier_first,' ',cashier_last) AS cashier_name, total_price, DATE_FORMAT(invoice_date, '%M %d, %Y') AS date FROM Invoices INNER JOIN Customers ON Invoices.customer_id = Customers.customer_id INNER JOIN Cashiers ON Invoices.cashier_id = Cashiers.cashier_id;"
     }
 
     // If there is a query string, we assume this is a search, and return desired results
@@ -206,7 +206,7 @@ app.post('/add-cashier-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data.cashier_first}', '${data.cashier_last}', '${data.hourly_rate}')`;
+    query1 = "INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data.cashier_first}', '${data.cashier_last}', '${data.hourly_rate}')";
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -216,7 +216,7 @@ app.post('/add-cashier-ajax', function(req, res) {
             res.sendStatus(400);
         } else {
             // If there was no error, perform a SELECT * on Cashiers
-            query2 = `SELECT * FROM Cashiers;`;
+            query2 = "SELECT * FROM Cashiers;";
             db.pool.query(query2, function(error, rows, fields) {
 
                 // If there was an error on the second query, send a 400
@@ -246,31 +246,31 @@ app.post('/add-customer-ajax', function(req, res) {
     // Capture NULL values
     let customer_email = (data.customer_email);
     if (customer_email == null) {
-        customer_email = NULL;
+        customer_email = NULL
     }
 
     let customer_address = (data.customer_address);
     if (customer_address == null) {
-        customer_address = NULL;
+        customer_address = NULL
     }
 
     let customer_city = (data.customer_city);
     if (customer_city == null) {
-        customer_city = NULL;
+        customer_city = NULL
     }
 
     let customer_state = (data.customer_state);
     if (customer_state == null) {
-        customer_state = NULL;
+        customer_state = NULL
     }
 
-    let customer_zip = parseInt(data.customer_zip);
-    if (customer_zip == null) {
-        customer_zip = NULL;
+    let zip = parseInt(data.customer_zip);
+    if (isNaN(zip)) {
+        zip = 'NULL'
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Customers (customer_first, customer_last, customer_email, customer_address, customer_city, customer_state, customer_zip) VALUES ('${data.customer_first}', '${data.customer_last}', '${customer_email}', '${customer_address}', '${customer_city}', '${customer_state}', '${customer_zip}')`;
+    query1 = `INSERT INTO Customers (customer_first, customer_last, customer_email, customer_address, customer_city, customer_state, customer_zip) VALUES ('${data.customer_first}', '${data.customer_last}', '${customer_email}', '${customer_address}', '${customer_city}', '${customer_state}', ${zip})`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error

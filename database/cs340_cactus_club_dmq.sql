@@ -81,8 +81,8 @@ WHERE invoiceItem_id = :invoiceItem_ID_from_update_form;
 -- search for a Cashier
 --
 SELECT FROM Cashiers
-WHERE cashier_last = :cashier_last_from_dropdown_Input;
-
+WHERE cashier_last
+LIKE :cashier_last_from_dropdown_Input;
 
 -- --------------------------------------------------------
 

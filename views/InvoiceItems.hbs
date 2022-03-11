@@ -83,7 +83,7 @@
 							<label for="input-invoice_id">Plant ID: *</label>
 							<br>
 							<select class="custom-select mr-sm-2" name="input-plant_id" id="input-plant_id" required />
-								<option value="">Select a Plant</option>
+								<option value="">Select by Plant Name...</option>
 								{{#each plants}}
 								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
 								{{/each}}
@@ -96,7 +96,7 @@
           			</div>					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<a href="/InvoiceItems"></a><input type="submit" class="btn btn-success" value="Add"></a>
 					</div>
 				</form>
 			</div>

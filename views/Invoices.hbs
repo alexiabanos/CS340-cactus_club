@@ -39,11 +39,10 @@
                       {{#each data}}
                       <tr data-value={{this.invoice_id}}>
                         <td>{{this.invoice_id}}</td>
-                        <td>{{this.customer_id}}</td>
-                        <td>{{this.cashier_id}}</td>
+                        <td>{{this.customer_name}}</td>
+                        <td>{{this.cashier_name}}</td>
                         <td>{{this.total_price}}</td>
-                        <td>{{this.invoice_date}}</td>
-						
+                        <td>{{this.date}}</td>
 						<!-- DELETE -->
 						<td><a href="/Invoices"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoice({{this.invoice_id}})">Delete</button></a></td>
                       </tr>
@@ -68,22 +67,22 @@
 					<p>Cashier selection not necessary for online orders.</p>
             		<p style="color:red;">Required Fields *</p>
 						<div class="form-group">
-							<label class="mr-sm-2" for="input-customer_id">Customer: *</label>
+							<label class="mr-sm-2" for="input-customer_id">Customer ID: *</label>
 							<br>
 							<select class="custom-select mr-sm-2" name="input-customer_id" id="input-customer_id" required>
-								<option value="">Select...</option>
+								<option value="">Select by Name...</option>
 								{{#each customers}}
-								<option value="{{this.customer_id}}">{{this.customer_first}}, {{this.customer_last}}</option>
+								<option value="{{this.customer_id}}">{{this.customer_first}} {{this.customer_last}}</option>
 								{{/each}}
 							</select>
 						</div>						
 						<div class="form-group">
-							<label for="input-cashier_id">Cashier: (Optional)</label>
+							<label for="input-cashier_id">Cashier ID: (Optional)</label>
 							<br>
 							<select class="custom-select mr-sm-2" name="input-cashier_id" id="input-cashier_id">
-								<option value="">Select...</option>
+								<option value="">Select by Name...</option>
 								{{#each cashiers}}
-								<option value="{{this.cashier_id}}">{{this.cashier_last}}, {{this.cashier_first}}</option>
+								<option value="{{this.cashier_id}}">{{this.cashier_first}} {{this.cashier_last}} </option>
 								{{/each}}
 							</select>
 						</div>
