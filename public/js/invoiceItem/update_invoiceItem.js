@@ -1,4 +1,4 @@
-function getData(invoiceItem_id) {
+/*function getData(invoiceItem_id) {
     // Put our data we want to send in a javascript object
     let data = {
         invoiceItem_id: invoiceItem_id,
@@ -26,7 +26,7 @@ function getData(invoiceItem_id) {
         }
         // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-}
+}*/
 
 // Get the objects we need to modify
 let updateInvoiceForm = document.getElementById('update-invoiceItem-form-ajax');
@@ -38,7 +38,7 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
     // Get form fields we need to get data from
     let inputInvoiceItemId = document.getElementById("input-invoiceItem_id-update");
-    let inputInvoiceId = document.getElementById("input-plant_invoice-update");
+    let inputInvoiceId = document.getElementById("input-invoice_id-update");
     let inputPlantId = document.getElementById("input-plant_id-update");
     let inputPlantQuantity = document.getElementById("input-plant_quantity-update");
 
