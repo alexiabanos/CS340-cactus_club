@@ -38,10 +38,14 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
     // Get form fields we need to get data from
     let inputInvoiceItemId = document.getElementById("input-invoiceItem_id-update");
+    let inputInvoiceId = document.getElementById("input-plant_invoice-update");
+    let inputPlantId = document.getElementById("input-plant_id-update");
     let inputPlantQuantity = document.getElementById("input-plant_quantity-update");
 
     // Get the values from the form fields
     let invoiceItemIDValue = inputInvoiceItemId.value;
+    let invoiceIDValue = inputInvoiceId.value;
+    let plantIDValue = inputplantId.value;
     let plantQuantityValue = inputPlantQuantity.value;
 
     // Plant quantity can't be null
@@ -52,6 +56,8 @@ updateInvoiceForm.addEventListener("submit", function(e) {
     // Put our data we want to send in a javascript object
     let data = {
         invoiceItem_id: invoiceItemIDValue,
+        invoice_id: invoiceIDValue,
+        plant_id: plantIDValue,
         plant_quantity: plantQuantityValue
     }
 
@@ -91,6 +97,18 @@ function updateRow(data, invoiceItem_id) {
 
             // Get the location of the row where we found the matching invoiceItem ID
             let updateRowIndex = table.getElementsByTagName("tr")[i];
+
+            // Get td of invoice id value
+            td = updateRowIndex.getElementsByTagName("td")[1];
+
+            // Reassign invoice id to our value we updated to
+            td.innerHTML = parsedData[0].invoice_id;
+
+            // Get td of plant id value
+            td = updateRowIndex.getElementsByTagName("td")[2];
+
+            // Reassign plant id to our value we updated to
+            td.innerHTML = parsedData[0].plant_id;
 
             // Get td of plantQuantity value
             td = updateRowIndex.getElementsByTagName("td")[3];
