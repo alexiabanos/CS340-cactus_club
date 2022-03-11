@@ -9,7 +9,7 @@ function getData(invoiceItem_id) {
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-invoiceItem-ajax", true);
+    xhttp.open("PUT", "/put-invoiceItem-ajax", true);
     xhttp.setRequestHeader("Content-type", "application/json");
 
     // Tell our AJAX request how to resolve
@@ -117,5 +117,27 @@ function updateRow(data, invoiceItem_id) {
             td.innerHTML = parsedData[0].plant_quantity;
         }
     }
+}
 
+function updateModal(data, invoiceItem_id) {
+    let parsedData = JSON.parse(data);
+
+    let table = document.getElementById("invoiceItems-table");
+
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        console.log(table.rows[i].getAttribute('data-value'));
+        //iterate through rows
+        //rows would be accessed using the "row" variable assigned in the for loop
+        if (table.rows[i].getAttribute('data-value') == invoiceItem_id) {
+
+            // Get the location of the row where we found the matching invoiceItem ID
+            let updateRowIndex = table.getElementsByTagName("tr")[i];
+
+            // Get td of plantQuantity value
+            td = updateRowIndex.getElementsByTagName("td")[3];
+
+            // Reassign plantQuantity to our value we updated to
+            td.innerHTML = parsedData[0].plant_quantity;
+        }
+    }
 }

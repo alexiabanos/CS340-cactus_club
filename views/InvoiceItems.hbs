@@ -83,7 +83,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="input-invoice_id">Plant Name: *</label>
+							<label for="input-plant_id">Plant Name: *</label>
 							<br>
 							<select class="custom-select mr-sm-2" name="input-plant_id" id="input-plant_id" required />
 								<option value="">Select a Plant</option>
@@ -93,7 +93,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="input-invoice_id">Plant Quantity: *</label>
+							<label for="input-plant_quantity">Plant Quantity: *</label>
 							<input type="number" class="form-control"  name="input-plant_quantity" id="input-plant_quantity" min="0" max="9999" step="1" required />
 						</div>
           			</div>					
@@ -133,9 +133,9 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="input-invoiceItem_id-update">Invoice ID: *</label>
+							<label for="input-invoice_id-update">Invoice ID: *</label>
 							<br>
-							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
+							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
 								<option value="">{{data.invoice_id}}</option>
 								{{#each data}}
 								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
@@ -145,9 +145,9 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="input-invoiceItem_id-update">Plant: *</label>
+							<label for="input-plant_id-update">Plant: *</label>
 							<br>
-							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
+							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
 								<option value="">{{data.invoiceItem_id}}</option>
 								{{#each plants}}
 								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
