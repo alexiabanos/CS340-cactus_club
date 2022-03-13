@@ -16,7 +16,7 @@
 			<table>
 				<tr>
 					<td colspan="6" align="left">
-					<a href="#addCashierModal" class="edit" data-bs-toggle="modal">
+					<a href="#addCashierModal" class="add" data-bs-toggle="modal">
 					<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addCashierModal" title="Add">Add A New Cashier + </button></a>
 					</td>
 				</tr>
@@ -64,7 +64,8 @@
 					<td>{{this.hourly_rate}}</td>
 					
 					<!-- DELETE -->
-					<td><a href="/Cashiers"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteCashier({{this.cashier_id}})">Delete</button></a></td>
+					<td><a href="#deleteCashierModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteCashierModal{{this.cashier_id}}"  data-value="{{this.cashier_id}}">
+					<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -148,7 +149,8 @@
 </div>
 
 <!-- DELETE MODAL -->
-<div id="deleteCashierModal" class="modal">
+{{#each data}}
+<div class="modal" id="deleteCashierModal{{this.cashier_id}}">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form>
@@ -162,9 +164,10 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteItem({{this.cashier_id}})">
+					<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteCashier({{this.cashier_id}})">
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
+{{/each}}
