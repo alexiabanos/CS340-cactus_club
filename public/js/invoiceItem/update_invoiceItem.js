@@ -1,30 +1,9 @@
-function getData(object) {
-    // Put our data we want to send in a javascript object
-    let data = {
-        invoiceItem_id: object.invoiceItem_id,
-        invoice_id: object.invoice_id,
-        plant_id: object.plant_id,
-        plant_quantity: object.plant_quantity
-    };
-
-    let field = document.getElementById("invoice_id_field");
-
-    field.setAttribute('value', data.invoice_id);
-}
-
-// Get the objects we need to modify
-let updateInvoiceForm = document.getElementById('update-invoiceItem-form-ajax');
-
-// Modify the objects we need
-updateInvoiceForm.addEventListener("submit", function(e) {
-    // Prevent the form from submitting
-    e.preventDefault();
-
+function updateInvoiceItem(invoiceItem_id) {
     // Get form fields we need to get data from
-    let inputInvoiceItemId = document.getElementById("input-invoiceItem_id-update");
-    let inputInvoiceId = document.getElementById("input-invoice_id-update");
-    let inputPlantId = document.getElementById("input-plant_id-update");
-    let inputPlantQuantity = document.getElementById("input-plant_quantity-update");
+    let inputInvoiceItemId =  document.querySelector(`#updateInvoiceItemModal${invoiceItem_id} #input-invoiceItem_id-update`);
+    let inputInvoiceId = document.querySelector(`#updateInvoiceItemModal${invoiceItem_id} #input-invoice_id-update`);
+    let inputPlantId = document.querySelector(`#updateInvoiceItemModal${invoiceItem_id} #input-plant_id-update`);
+    let inputPlantQuantity = document.querySelector(`#updateInvoiceItemModal${invoiceItem_id} #input-plant_quantity-update`);
 
     // Get the values from the form fields
     let invoiceItemIDValue = inputInvoiceItemId.value;
@@ -65,8 +44,7 @@ updateInvoiceForm.addEventListener("submit", function(e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-})
-
+}
 
 function updateRow(data, invoiceItem_id) {
     let parsedData = JSON.parse(data);
@@ -102,27 +80,3 @@ function updateRow(data, invoiceItem_id) {
         }
     }
 }
-/*
-function updateModal(data, invoiceItem_id) {
-    let parsedData = JSON.parse(data);
-
-    let table = document.getElementById("invoiceItems-table");
-
-    for (let i = 0, row; row = table.rows[i]; i++) {
-        console.log(table.rows[i].getAttribute('data-value'));
-        //iterate through rows
-        //rows would be accessed using the "row" variable assigned in the for loop
-        if (table.rows[i].getAttribute('data-value') == invoiceItem_id) {
-
-            // Get the location of the row where we found the matching invoiceItem ID
-            let updateRowIndex = table.getElementsByTagName("tr")[i];
-
-            // Get td of plantQuantity value
-            td = updateRowIndex.getElementsByTagName("td")[3];
-
-            // Reassign plantQuantity to our value we updated to
-            td.innerHTML = parsedData[0].plant_quantity;
-        }
-    }
-}
-*/

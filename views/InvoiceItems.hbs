@@ -21,8 +21,8 @@
                       <td>
                       <a href="#addInvoiceItemModal" class="add" data-bs-toggle="modal">
                       <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
-                      <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
-                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Update">Update an Invoice Item </button>
+                      {{!-- <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Update">Update an Invoice Item </button> --}}
                       </td>
                     </tr>
                   </tbody>
@@ -44,16 +44,18 @@
                     <tbody>
                       {{#each data}}
                       <tr data-value={{this.invoiceItem_id}}>
-                        <td id="invoiceItem_id">{{this.invoiceItem_id}}</td>
+                        <td>{{this.invoiceItem_id}}</td>
                         <td>{{this.invoice_id}}</td>
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_quantity}}</td>
                         
 						<!-- DELETE -->
-						<td><a href="/InvoiceItems"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoiceItem({{this.invoiceItem_id}})">Delete</button></a></td>
+						<td><a href="#deleteInvoiceItemModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
+						<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
 						<!-- Update -->
-						<td><a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal"><button class="btn btn-outline-warning my-2 my-sm-0" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" onclick="getData({{this}})" title="Update">Update</button></a></td>
-                      </tr>
+						<td><a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal" data-bs-target="#updateInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
+						<button class="btn btn-outline-warning my-2 my-sm-0" >Update</button></a></td>
+					  </tr>
                       {{/each}}
                     </tbody>
                 </table>
@@ -109,7 +111,8 @@
 	<script src="./js/invoiceItem/add_invoiceItem.js"></script>
 
 	<!-- UPDATE MODAL -->
-	<div id="updateInvoiceItemModal" class="modal">
+	{{#each data}}
+	<div class="modal" id="updateInvoiceItemModal{{this.invoiceItem_id}}">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form id="update-invoiceItem-form-ajax">
@@ -123,9 +126,10 @@
 						<div class="form-group">
 							<label for="input-invoiceItem_id-update">Invoice Item ID: *</label>
 							<br>
-							{{#each data}}
-							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" required="required">
-								<option value="">getData({{this.invoiceItem_id}})</option>
+							<select name="input-invoiceItem_id-update" id="input-invoiceItem_id-update" disabled="disabled" required="required">
+								<option id="invoiceItem_id_field">{{this.invoiceItem_id}}</option>
+								{{#each @root.data}}
+								<option value="{{this.invoiceItem_id}}">{{this.invoiceItem_id}}</option>
 								{{/each}}
 							</select>
 							<br>
@@ -135,8 +139,8 @@
 							<label for="input-invoice_id-update">Invoice ID: *</label>
 							<br>
 							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
-								<option id="invoice_id_field">{{data.invoice_id}}</option>
-								{{#each invoices}}
+								<option id="invoice_id_field">{{this.invoice_id}}</option>
+								{{#each @root.invoices}}
 								<option value="{{this.invoice_id}}">{{this.invoice_id}}</option>
 								{{/each}}
 							</select>
@@ -147,8 +151,8 @@
 							<label for="input-plant_id-update">Plant: *</label>
 							<br>
 							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
-								<option value="">{{data.plant_id}}</option>
-								{{#each plants}}
+								<option id="plant_name_field">{{this.plant_id}}</option>
+								{{#each @root.plants}}
 								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
 								{{/each}}
 							</select>
@@ -158,22 +162,24 @@
 						<div class="form-group">
 							<label for="input-plant_quantity">Update Plant Quantity: *</label>
 							<br>
-							<input name="input-plant_quantity-update" id="input-plant_quantity-update" type="number" class="form-control" min="0" max="9999" step="1" required>
+							<input name="input-plant_quantity-update" id="input-plant_quantity-update" type="number" class="form-control" min="0" max="9999" step="1" placeholder="{{this.plant_quantity}}" value="{{this.plant_quantity}}" required>
 						</div>
             		</div>
 					  <div class="modal-footer">
-						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-outline-success" value="Save">
+						<input type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" value="Cancel">
+						<input id="update-submit" type="submit" class="btn btn-outline-success" value="Submit" onclick="updateInvoiceItem({{this.invoiceItem_id}})">
 					  </div>
 				</form>
 			</div>
 		</div>
 	</div>
+	{{/each}}
 	<!-- UPDATE JS SCRIPT -->
 	<script src="./js/invoiceItem/update_invoiceItem.js"></script>
 
 	<!-- DELETE MODAL -->
-	<div id="deleteInvoiceItemModal" class="modal">
+	{{#each data}}
+	<div class="modal" id="deleteInvoiceItemModal{{this.invoiceItem_id}}">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form>
@@ -187,11 +193,12 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-outline-danger" value="Delete">
+						<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteInvoiceItem({{this.invoiceItem_id}})">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	{{/each}}
 </div>
 </div>
