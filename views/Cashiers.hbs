@@ -7,7 +7,7 @@
 	<div class="container">
 		<div class="row table-responsive align-middle">
 			
-			<!-- CASHIERS -->
+			<!-- CASHIERS DESCRIPTION -->
 			<h1>Cashiers</h1>
 			<hr>
 			<p>Use this page to add, edit, update or remove the details of cashiers employed by the store:</p>
@@ -16,8 +16,7 @@
 			<table>
 				<tr>
 					<td colspan="6" align="left">
-					<a href="#addCashierModal" class="add" data-bs-toggle="modal">
-					<button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addCashierModal" title="Add">Add A New Cashier + </button></a>
+					<button class="btn btn-primary my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#addCashierModal{{this.cashier_id}}"  data-value="{{this.cashier_id}}">Add A New Cashier + </button>
 					</td>
 				</tr>
 				</tbody>
@@ -29,7 +28,7 @@
 				<div class="input-group"></div>
 				<form id="search-cashier-html" method='GET' action='/Cashiers'>	
 				<tr>
-					<label for="input-cashier_last"><th>Search by Last Name:</th></label>
+					<label for="input-cashier_last"><th>Search Cashiers by Last Name:</th></label>
 				</tr>
 				</thead>
 				<tbody>
@@ -63,9 +62,10 @@
 					<td>{{this.cashier_last}}</td>
 					<td>{{this.hourly_rate}}</td>
 					
-					<!-- DELETE -->
-					<td><a href="#deleteCashierModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteCashierModal{{this.cashier_id}}"  data-value="{{this.cashier_id}}">
-					<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
+					<!-- DELETE BUTTON-->
+					<td>
+					<button class="btn btn-outline-danger my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#deleteCashierModal{{this.cashier_id}}"  data-value="{{this.cashier_id}}">Delete</button>
+					</td>
 					</tr>
 					{{/each}}
 				</tbody>
@@ -75,7 +75,7 @@
 </div>
 
 <!-- ADD MODAL -->
-<div id="addCashierModal" class="modal">
+<div id="addCashierModal{{this.cashier_id}}" class="modal">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<form id="add-cashier-form-ajax">
@@ -100,7 +100,7 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-success" value="Add">
+					<input type="submit" class="btn btn-success" value="Add" onclick="/Cashiers">
 				</div>
 			</form>
 		</div>
@@ -109,44 +109,6 @@
 
 <!-- ADD JS SCRIPT -->
 <script src="./js/cashier/add_cashier.js"></script>
-
-<!-- EDIT MODAL -->
-<div id="editCashierModal" class="modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Edit Cashier</h4>
-					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p style="color:red;">Required Fields *</p>						
-					<div class="form-group">
-						<label>Cashier ID: *</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Cashier First Name: *</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Cashier Last Name: *</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Cashier Hourly Rate: *</label>
-						<input type="text" class="form-control" required>
-					</div>
-				</div>					
-				<div class="modal-footer">
-					<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-outline-success" value="Save">
-				</div>
-			</div>
-			</form>
-		</div>
-	</div>
-</div>
 
 <!-- DELETE MODAL -->
 {{#each data}}

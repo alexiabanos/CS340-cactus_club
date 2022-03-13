@@ -37,8 +37,8 @@
 						<th>invoice_id</th>
 						<th>plant_id</th>
 						<th>plant_quantity</th>
-                        <th></th>
-                        <th></th>
+                        <th>Delete</th>
+                        <th>Update</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -49,10 +49,10 @@
                         <td>{{this.plant_id}}</td>
                         <td>{{this.plant_quantity}}</td>
                         
-						<!-- DELETE -->
+						<!-- DELETE BUTTON-->
 						<td><a href="#deleteInvoiceItemModal" class="delete" data-bs-toggle="modal" data-bs-target="#deleteInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
 						<button class="btn btn-outline-danger my-2 my-sm-0" >Delete</button></a></td>
-						<!-- Update -->
+						<!-- UPDATE  BUTTON-->
 						<td><a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal" data-bs-target="#updateInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">
 						<button class="btn btn-outline-warning my-2 my-sm-0" >Update</button></a></td>
 					  </tr>
@@ -121,8 +121,7 @@
 						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 					</div>
 					  <div class="modal-body">
-            			<p style="color:red;">Required Fields *</p>
-						<p><b>Select the Invoice Item you would like to update:</b></p>					
+            			<p style="color:red;">Required Fields *</p>				
 						<div class="form-group">
 							<label for="input-invoiceItem_id-update">Invoice Item ID: *</label>
 							<br>
@@ -136,7 +135,7 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="input-invoice_id-update">Invoice ID: *</label>
+							<label for="input-invoice_id-update">Update Invoice ID: *</label>
 							<br>
 							<select name="input-invoice_id-update" id="input-invoice_id-update" required="required">
 								<option id="invoice_id_field">{{this.invoice_id}}</option>
@@ -148,7 +147,7 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="input-plant_id-update">Plant: *</label>
+							<label for="input-plant_id-update">Update Plant ID: *</label>
 							<br>
 							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
 								<option id="plant_name_field">{{this.plant_id}}</option>
