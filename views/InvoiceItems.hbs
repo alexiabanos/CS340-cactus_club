@@ -14,15 +14,12 @@
                 <hr>
                 <p>Use this page to add, update, update or remove the details individual Invoice Items on Invoices of a customer's purchase:</p>
 
-                <!-- ADD / EDIT BUTTONS -->
+                <!-- ADD BUTTON -->
                 <table>
 					<tbody>
                     <tr>
                       <td>
-                      <a href="#addInvoiceItemModal" class="add" data-bs-toggle="modal">
-                      <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceItemModal" title="Add">Add A New Invoice Item + </button></a>
-                      {{!-- <a href="#updateInvoiceItemModal" class="update" data-bs-toggle="modal">
-                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="tooltip" data-bs-target="updateInvoiceItemModal" title="Update">Update an Invoice Item </button> --}}
+                      <button class="btn btn-primary my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#addInvoiceItemModal{{this.invoiceItem_id}}"  data-value="{{this.invoiceItem_id}}">Add A New Invoice Item + </button>
                       </td>
                     </tr>
                   </tbody>
@@ -101,7 +98,7 @@
           			</div>					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<a href="/InvoiceItems"></a><input type="submit" class="btn btn-success" value="Add"></a>
+						<input type="submit" class="btn btn-success" value="Add" onclick="javascript:window.location.reload()">
 					</div>
 				</form>
 			</div>

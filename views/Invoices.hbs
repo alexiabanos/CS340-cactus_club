@@ -16,8 +16,7 @@
                 <table>
                     <tr>
                       <td colspan="6" align="left">
-                      <a href="#addInvoiceModal" class="edit" data-bs-toggle="modal">
-                      <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-target="addInvoiceModal" title="Add">Add A New Invoice + </button></a>
+                      <button class="btn btn-primary my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#addInvoiceModal{{this.invoice_id}}"  data-value="{{this.invoice_id}}">Add A New Invoice + </button>
                       </td>
                     </tr>
                   </tbody>
@@ -44,7 +43,8 @@
                         <td>{{this.total_price}}</td>
                         <td>{{this.date}}</td>
 						<!-- DELETE -->
-						<td><a href="/Invoices"><button class="btn btn-outline-danger my-2 my-sm-0" onclick="deleteInvoice({{this.invoice_id}})">Delete</button></a></td>
+						<td><button class="btn btn-outline-danger my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#addInvoiceModal{{this.invoice_id}}"  data-value="{{this.invoice_id}}" onclick="deleteInvoice({{this.invoice_id}})">Delete</button>
+						</td>
                       </tr>
                       {{/each}}
                     </tbody>
@@ -55,7 +55,7 @@
 </div>
 
   <!-- ADD MODAL -->
-	<div id="addInvoiceModal" class="modal">
+	<div id="addInvoiceModal{{this.invoice_id}}" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form id="add-invoice-form-ajax">
@@ -97,7 +97,7 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" value="Add" onclick="javascript:window.location.reload()">
 					</div>
 				</form>
 			</div>
@@ -150,7 +150,8 @@
 	</div>
 
 	<!-- DELETE MODAL -->
-	<div id="deleteInvoiceModal" class="modal">
+	{{#each data}}
+	<div id="deleteInvoiceModal{{this.invoice_id}}" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form>
@@ -164,9 +165,10 @@
 					</div>
 					<div class="modal-footer">
 						<input type="button" class="btn btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-outline-danger" value="Delete">
+						<input type="submit" class="btn btn-outline-danger" value="Delete" onclick="deleteCashier({{this.cashier_id}})">
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	{{/each}}
