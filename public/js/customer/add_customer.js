@@ -47,7 +47,6 @@ addcustomerForm.addEventListener("submit", function(e) {
 
             // Add the new data to the table
             addRowToTable(xhttp.response);
-            window.location.reload();
 
             // Clear the input fields for another transaction
             inputCustomerFirst.value = '';
@@ -65,7 +64,6 @@ addcustomerForm.addEventListener("submit", function(e) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-    window.location.reload();
 })
 
 addRowToTable = (data) => {

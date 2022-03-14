@@ -43,7 +43,7 @@ app.get('/Cashiers', (req, res) => {
 
     // If there is a query string, we assume this is a search, and return desired results
     else {
-        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%";`;
+        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%"`
     }
 
 

@@ -18,7 +18,7 @@
                 <table>
                     <tr>
                       <td colspan="6" align="left">
-                      <button class="btn btn-primary my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#addCustomerModal{{this.customer_id}}"  data-value="{{this.customer_id}}">Add A New Customer + </button>
+                      <button class="btn btn-primary my-2 my-sm-0"  data-bs-toggle="modal" data-bs-target="#addCustomerModal">Add A New Customer + </button>
                       </td>
                     </tr>
                   </tbody>
@@ -57,7 +57,7 @@
     </div>
 
   <!-- ADD MODAL -->
-	<div id="addCustomerModal{{this.customer_id}}" class="modal">
+	<div id="addCustomerModal" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<form id="add-customer-form-ajax">
@@ -153,7 +153,7 @@
           				</div>					
 						<div class="modal-footer">
 						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" value="Add">
+						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Add">
 					</div>
 				</form>
 			</div>
