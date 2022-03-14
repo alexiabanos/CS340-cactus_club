@@ -43,7 +43,7 @@ app.get('/Cashiers', (req, res) => {
 
     // If there is a query string, we assume this is a search, and return desired results
     else {
-        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%"`
+        query1 = `SELECT * FROM Cashiers WHERE cashier_last LIKE "${req.query.cashier_last}%";`;
     }
 
 
@@ -79,12 +79,12 @@ app.get('/Invoices', (req, res) => {
 
     // SELECT Query
     if (req.query.invoice_id === undefined) {
-        query1 = "SELECT invoice_id, CONCAT(customer_first,'  ',customer_last) AS customer_name, CONCAT(cashier_first,' ',cashier_last) AS cashier_name, total_price, DATE_FORMAT(invoice_date, '%M %d, %Y') AS date FROM Invoices INNER JOIN Customers ON Invoices.customer_id = Customers.customer_id INNER JOIN Cashiers ON Invoices.cashier_id = Cashiers.cashier_id;"
+        query1 = `SELECT invoice_id, CONCAT(customer_first,'  ',customer_last) AS customer_name, CONCAT(cashier_first,' ',cashier_last) AS cashier_name, total_price, DATE_FORMAT(invoice_date, '%M %d, %Y') AS date FROM Invoices INNER JOIN Customers ON Invoices.customer_id = Customers.customer_id INNER JOIN Cashiers ON Invoices.cashier_id = Cashiers.cashier_id;`;
     }
 
     // If there is a query string, we assume this is a search, and return desired results
     else {
-        query1 = `SELECT * FROM Invoices WHERE invoice_id LIKE "${req.query.invoice_id}%"`
+        query1 = `SELECT * FROM Invoices WHERE invoice_id LIKE "${req.query.invoice_id}%";`;
     }
 
     // Query 2
@@ -147,7 +147,7 @@ app.get('/InvoiceItems', (req, res) => {
 
     // If there is a query string, we assume this is a search, and return desired results
     else {
-        query1 = `SELECT * FROM InvoiceItems WHERE invoiceItem_id LIKE "${req.query.invoiceItem_id}%"`
+        query1 = `SELECT * FROM InvoiceItems WHERE invoiceItem_id LIKE "${req.query.invoiceItem_id}%"`;
     }
 
     // Query 2
@@ -206,7 +206,7 @@ app.post('/add-cashier-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = "INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data.cashier_first}', '${data.cashier_last}', '${data.hourly_rate}')";
+    query1 = `INSERT INTO Cashiers (cashier_first, cashier_last, hourly_rate) VALUES ('${data.cashier_first}', '${data.cashier_last}', '${data.hourly_rate}')`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -216,7 +216,7 @@ app.post('/add-cashier-ajax', function(req, res) {
             res.sendStatus(400);
         } else {
             // If there was no error, perform a SELECT * on Cashiers
-            query2 = "SELECT * FROM Cashiers;";
+            query2 = `SELECT * FROM Cashiers;`;
             db.pool.query(query2, function(error, rows, fields) {
 
                 // If there was an error on the second query, send a 400
@@ -270,7 +270,7 @@ app.post('/add-customer-ajax', function(req, res) {
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Customers (customer_first, customer_last, customer_email, customer_address, customer_city, customer_state, customer_zip) VALUES ('${data.customer_first}', '${data.customer_last}', '${customer_email}', '${customer_address}', '${customer_city}', '${customer_state}', ${zip})`;
+    query1 = `INSERT INTO Customers (customer_first, customer_last, customer_email, customer_address, customer_city, customer_state, customer_zip) VALUES ('${data.customer_first}', '${data.customer_last}', '${customer_email}', '${customer_address}', '${customer_city}', '${customer_state}', ${zip});`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -304,7 +304,7 @@ app.post('/add-plant-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Plants (plant_name, plant_price) VALUES ('${data.plant_name}', '${data.plant_price}')`;
+    query1 = `INSERT INTO Plants (plant_name, plant_price) VALUES ('${data.plant_name}', '${data.plant_price}');`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -344,7 +344,7 @@ app.post('/add-invoice-ajax', function(req, res) {
     }
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', ${cashier_id}, '${data.total_price}', '${data.invoice_date}')`;
+    query1 = `INSERT INTO Invoices (customer_id, cashier_id, total_price, invoice_date) VALUES ('${data.customer_id}', ${cashier_id}, '${data.total_price}', '${data.invoice_date}');`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -401,7 +401,7 @@ app.post('/add-invoiceItem-ajax', function(req, res) {
     let data = req.body;
 
     // Create the query and run it on the database
-    query1 = `INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) VALUES ('${data.invoice_id}', '${data.plant_id}', '${data.plant_quantity}')`;
+    query1 = `INSERT INTO InvoiceItems (invoice_id, plant_id, plant_quantity) VALUES ('${data.invoice_id}', '${data.plant_id}', '${data.plant_quantity}');`;
     db.pool.query(query1, function(error, rows, fields) {
 
         // Check to see if there was an error
@@ -460,7 +460,7 @@ app.post('/add-invoiceItem-ajax', function(req, res) {
 app.delete('/delete-cashier-ajax/', function(req, res, next) {
     let data = req.body;
     let cashier_id = parseInt(data.cashier_id);
-    let deleteCashier = `DELETE FROM Cashiers WHERE cashier_id = ?`;
+    let deleteCashier = `DELETE FROM Cashiers WHERE cashier_id = ?;`;
 
     // Run the 1st query
     db.pool.query(deleteCashier, [cashier_id], function(error, rows, fields) {
@@ -475,7 +475,7 @@ app.delete('/delete-cashier-ajax/', function(req, res, next) {
 app.delete('/delete-customer-ajax/', function(req, res, next) {
     let data = req.body;
     let customer_id = parseInt(data.customer_id);
-    let deleteCustomer = `DELETE FROM Customers WHERE customer_id = ?`;
+    let deleteCustomer = `DELETE FROM Customers WHERE customer_id = ?;`;
 
     // Run the 1st query
     db.pool.query(deleteCustomer, [customer_id], function(error, rows, fields) {
@@ -490,7 +490,7 @@ app.delete('/delete-customer-ajax/', function(req, res, next) {
 app.delete('/delete-invoiceItem-ajax/', function(req, res, next) {
     let data = req.body;
     let invoiceItem_id = parseInt(data.invoiceItem_id);
-    let deleteInvoiceItem = `DELETE FROM InvoiceItems WHERE invoiceItem_id = ?`;
+    let deleteInvoiceItem = `DELETE FROM InvoiceItems WHERE invoiceItem_id = ?;`;
 
     // Run the 1st query
     db.pool.query(deleteInvoiceItem, [invoiceItem_id], function(error, rows, fields) {
@@ -505,7 +505,7 @@ app.delete('/delete-invoiceItem-ajax/', function(req, res, next) {
 app.delete('/delete-invoice-ajax/', function(req, res, next) {
     let data = req.body;
     let invoice_id = parseInt(data.invoice_id);
-    let deleteInvoice = `DELETE FROM Invoices WHERE invoice_id = ?`;
+    let deleteInvoice = `DELETE FROM Invoices WHERE invoice_id = ?;`;
 
     // Run the 1st query
     db.pool.query(deleteInvoice, [invoice_id], function(error, rows, fields) {
@@ -520,7 +520,7 @@ app.delete('/delete-invoice-ajax/', function(req, res, next) {
 app.delete('/delete-plant-ajax/', function(req, res, next) {
     let data = req.body;
     let plant_id = parseInt(data.plant_id);
-    let deletePlant = `DELETE FROM Plants WHERE plant_id = ?`;
+    let deletePlant = `DELETE FROM Plants WHERE plant_id = ?;`;
 
     // Run the 1st query
     db.pool.query(deletePlant, [plant_id], function(error, rows, fields) {
@@ -544,8 +544,8 @@ app.put('/put-invoiceItem-ajax', function(req, res, next) {
     let plant_id = parseInt(data.plant_id);
     let plant_quantity = parseInt(data.plant_quantity);
 
-    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET invoice_id = ?, plant_id = ?, plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?`;
-    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?`;
+    let queryUpdateInvoiceItem = `UPDATE InvoiceItems SET invoice_id = ?, plant_id = ?, plant_quantity = ? WHERE InvoiceItems.invoiceItem_id = ?;`;
+    let selectInvoiceItem = `SELECT * FROM InvoiceItems WHERE invoiceItem_id = ?;`;
 
     // Run the 1st query
     db.pool.query(queryUpdateInvoiceItem, [invoice_id, plant_id, plant_quantity, invoiceItem_id], function(error, rows, fields) {
