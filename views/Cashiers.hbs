@@ -34,11 +34,11 @@
 				<tbody>
 				<tr>
 					<td colspan="6">
-					<input class="form-control mr-sm-2" type="search" placeholder="Enter last name..." type="text" name="cashier_last" id="input-cashier_last-html-search">
+					<input class="form-control mr-sm-2" type="search" placeholder="Enter last name..." type="text" name="cashier_last" id="input-cashier_last-html-search" required>
 					<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
-					<a href='/Cashiers'><button class="btn btn-outline-secondary my-2 my-sm-0">Clear Search Results</button></a>
 					</div>
 				</form>
+					<button class="btn btn-outline-secondary my-2 my-sm-0" onclick="window.location.replace(location.pathname)">Clear Search Results</button>
 					</td>
 				</tr>
 				</tbody>
@@ -99,7 +99,7 @@
 				</div>
 				<div class="modal-footer">
 					<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-					<button type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Add">Add</button>
+					<button type="submit" class="btn btn-success" value="Add">Add</button>
 				</div>
 			</form>
 		</div>
@@ -108,8 +108,7 @@
 
 
 <!-- ADD JS SCRIPT -->
-<script src="./js/cashier/add_cashier.js">
-</script>
+<script src="./js/cashier/add_cashier.js"></script>
 
 <!-- DELETE MODAL -->
 {{#each data}}
@@ -122,7 +121,7 @@
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
 				<div class="modal-body">					
-					<p>Are you sure you want to delete this Cashier?</p>
+					<p><b>Are you sure you want to delete this Cashier?</b></p>
 					<p>This action cannot be undone.</p>
 				</div>
 				<div class="modal-footer">

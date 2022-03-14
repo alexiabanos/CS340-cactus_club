@@ -98,7 +98,7 @@
           			</div>					
 					<div class="modal-footer">
 						<input type="button" class="btn btn-outline-warning" data-bs-dismiss="modal" value="Cancel">
-						<input type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Add">
+						<input type="submit" class="btn btn-success" name="save" value="Add">
 					</div>
 				</form>
 			</div>
@@ -149,7 +149,7 @@
 							<select name="input-plant_id-update" id="input-plant_id-update" required="required">
 								<option id="plant_name_field">{{this.plant_id}}</option>
 								{{#each @root.plants}}
-								<option value="{{this.plant_id}}">{{this.plant_id}}</option>
+								<option value="{{this.plant_id}}">{{this.plant_name}}</option>
 								{{/each}}
 							</select>
 							<br>

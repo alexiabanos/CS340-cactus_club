@@ -35,7 +35,6 @@ function updateInvoiceItem(invoiceItem_id) {
 
             // Add the new data to the table
             updateRow(xhttp.response, plantQuantityValue);
-            window.location.reload();
 
         } else if (xhttp.readyState == 4 && xhttp.status != 200) {
             console.log("There was an error with the input.")
@@ -44,7 +43,6 @@ function updateInvoiceItem(invoiceItem_id) {
 
     // Send the request and wait for the response
     xhttp.send(JSON.stringify(data));
-    window.location.reload();
 }
 
 function updateRow(data, invoiceItem_id) {
@@ -78,6 +76,8 @@ function updateRow(data, invoiceItem_id) {
 
             // Reassign plantQuantity to our value we updated to
             td.innerHTML = parsedData[0].plant_quantity;
+
+            window.location.reload();
         }
     }
 }
