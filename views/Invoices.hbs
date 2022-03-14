@@ -43,7 +43,7 @@
                         <td>{{this.total_price}}</td>
                         <td>{{this.date}}</td>
 						<!-- DELETE -->
-						<td><button class="btn btn-outline-danger my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#addInvoiceModal{{this.invoice_id}}"  data-value="{{this.invoice_id}}" onclick="deleteInvoice({{this.invoice_id}})">Delete</button>
+						<td><button class="btn btn-outline-danger my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#deleteInvoiceModal{{this.invoice_id}}"  data-value="{{this.invoice_id}}">Delete</button>
 						</td>
                       </tr>
                       {{/each}}
