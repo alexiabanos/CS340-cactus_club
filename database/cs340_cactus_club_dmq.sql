@@ -32,7 +32,13 @@ SELECT invoiceItem_id, invoice_id, plant_id, plant_quantity FROM InvoiceItems;
 --
 -- get all Invoice attributes to populate the Invoices table page
 --
-SELECT invoice_id, customer_id, cashier_id, total_price, invoice_date FROM Invoices;
+SELECT invoice_id, 
+CONCAT(customer_first,'  ',customer_last) AS customer_name, 
+CONCAT(cashier_first,' ',cashier_last) AS cashier_name, total_price, 
+DATE_FORMAT(invoice_date, '%M %d, %Y') AS date 
+FROM Invoices 
+INNER JOIN Customers ON Invoices.customer_id = Customers.customer_id 
+INNER JOIN Cashiers ON Invoices.cashier_id = Cashiers.cashier_id
 
 -- --------------------------------------------------------
 
@@ -115,9 +121,3 @@ WHERE cashier_id = :cashier_ID_from_dropdown_Input;
 --
 DELETE FROM InvoiceItems
 WHERE invoiceItem_id = :invoiceItem_ID_from_dropdown_Input;
-
---
--- dis-associate a Plant from an Inovice (M-to-M relationship deletion)
---
-DELETE FROM InvoiceItems 
-WHERE invoice_id = :invoice_id_from_dropdown_Input AND plant_id = :plant_id_from_dropdown_Input;
